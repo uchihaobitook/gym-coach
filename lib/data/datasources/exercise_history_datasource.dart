@@ -1,40 +1,45 @@
 import '../../core/utils/json_helpers.dart';
+import '../../core/utils/profile_storage_keys.dart';
 import '../models/measurement_models.dart';
 import '../models/workout_log.dart';
 import 'local_database.dart';
 
-/// Hive-backed storage for per-exercise strength history profiles.
+/// Hive-backed strength history scoped to one profile.
 class ExerciseHistoryDatasource {
-  ExerciseHistoryDatasource({LocalDatabase? database})
-      : _database = database ?? LocalDatabase.instance;
+  ExerciseHistoryDatasource({
+    required this.profileId,
+    LocalDatabase? database,
+  }) : _database = database ?? LocalDatabase.instance;
 
+  final String profileId;
   final LocalDatabase _database;
 
-  static const String _recordKeyPrefix = 'exercise_';
-
-  /// Returns the strength profile for [exerciseId], or null if none exists.
   Future<ExerciseStrengthProfile?> getByExerciseId(String exerciseId) async {
-    final box = _database.exerciseHistoryBox;
-    final raw = box.get(_keyFor(exerciseId));
+    final raw = _database.exerciseHistoryBox.get(_keyFor(exerciseId));
     if (raw == null) return null;
     return ExerciseStrengthProfile.fromJson(deepJsonMap(raw));
   }
 
-  /// Returns all stored exercise strength profiles.
   Future<List<ExerciseStrengthProfile>> getAll() async {
     final box = _database.exerciseHistoryBox;
-    return box.values
-        .map((raw) => ExerciseStrengthProfile.fromJson(deepJsonMap(raw)))
-        .toList();
+    final profiles = <ExerciseStrengthProfile>[];
+    for (final key in box.keys) {
+      final keyStr = key.toString();
+      if (!ProfileStorageKeys.belongsToProfile(keyStr, profileId)) continue;
+      final raw = box.get(key);
+      if (raw == null) continue;
+      profiles.add(ExerciseStrengthProfile.fromJson(deepJsonMap(raw)));
+    }
+    return profiles;
   }
 
-  /// Persists a full strength profile (insert or replace).
   Future<void> save(ExerciseStrengthProfile profile) async {
-    final box = _database.exerciseHistoryBox;
-    await box.put(_keyFor(profile.exerciseId), profile.toJson());
+    await _database.exerciseHistoryBox.put(
+      _keyFor(profile.exerciseId),
+      profile.toJson(),
+    );
   }
 
-  /// Appends a history entry when a workout completes.
   Future<void> appendHistoryEntry({
     required LoggedExercise exercise,
     required WorkoutLog workoutLog,
@@ -73,7 +78,6 @@ class ExerciseHistoryDatasource {
     await save(updated);
   }
 
-  /// Records history for every exercise in a completed workout.
   Future<void> appendFromWorkoutLog(WorkoutLog workoutLog) async {
     if (!workoutLog.isCompleted) return;
     for (final exercise in workoutLog.exercises) {
@@ -81,22 +85,34 @@ class ExerciseHistoryDatasource {
     }
   }
 
-  /// Replaces all stored profiles with a snapshot rollback on failure.
+  /// Replaces only this profile's strength profiles.
   Future<void> replaceAll(List<ExerciseStrengthProfile> profiles) async {
     final box = _database.exerciseHistoryBox;
-    final snapshot = Map<dynamic, dynamic>.from(box.toMap());
+    final profileKeys = box.keys
+        .map((k) => k.toString())
+        .where((k) => ProfileStorageKeys.belongsToProfile(k, profileId))
+        .toList();
+    final snapshot = <String, dynamic>{
+      for (final key in profileKeys) key: box.get(key),
+    };
+
     try {
-      final next = <String, Map<String, dynamic>>{
+      for (final key in profileKeys) {
+        await box.delete(key);
+      }
+      if (profiles.isEmpty) return;
+      await box.putAll({
         for (final p in profiles) _keyFor(p.exerciseId): p.toJson(),
-      };
-      await box.clear();
-      if (next.isNotEmpty) await box.putAll(next);
+      });
     } catch (_) {
-      await box.clear();
+      for (final key in profileKeys) {
+        await box.delete(key);
+      }
       if (snapshot.isNotEmpty) await box.putAll(snapshot);
       rethrow;
     }
   }
 
-  String _keyFor(String exerciseId) => '$_recordKeyPrefix$exerciseId';
+  String _keyFor(String exerciseId) =>
+      ProfileStorageKeys.exercise(profileId, exerciseId);
 }

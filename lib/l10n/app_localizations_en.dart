@@ -188,6 +188,11 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String setNumber(int number) {
+    return 'Set $number';
+  }
+
+  @override
   String get watchDemo => 'Watch demo';
 
   @override
@@ -208,6 +213,19 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get reps => 'Reps';
+
+  @override
+  String get weight => 'Weight';
+
+  @override
+  String decreaseValue(String value) {
+    return 'Decrease $value';
+  }
+
+  @override
+  String increaseValue(String value) {
+    return 'Increase $value';
+  }
 
   @override
   String get summary => 'Summary';
@@ -519,13 +537,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get exportBackup => 'Export backup';
 
   @override
-  String get exportBackupSubtitle => 'Save and share all app data';
+  String get exportBackupSubtitle => 'Save and share the current profile';
 
   @override
   String get importBackup => 'Import backup';
 
   @override
-  String get importBackupSubtitle => 'Restore from JSON file';
+  String get importBackupSubtitle => 'Restore into the active profile';
 
   @override
   String get restoreSubtitle => 'Pick a backup file to restore';
@@ -732,4 +750,69 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get updateAlreadyRunning => 'Another update is already in progress';
+
+  @override
+  String get profilesTitle => 'Profiles';
+
+  @override
+  String get profilesSubtitle => 'Separate training data for each person';
+
+  @override
+  String get currentProfile => 'Current profile';
+
+  @override
+  String get switchProfile => 'Switch profile';
+
+  @override
+  String get addProfile => 'Add profile';
+
+  @override
+  String get createProfile => 'Create profile';
+
+  @override
+  String get editProfile => 'Edit profile';
+
+  @override
+  String get renameProfile => 'Rename';
+
+  @override
+  String get deleteProfile => 'Delete profile';
+
+  @override
+  String get deleteProfileTitle => 'Delete profile?';
+
+  @override
+  String deleteProfileBody(String name) {
+    return 'All workouts, measurements, and progress for \"$name\" will be deleted. This cannot be undone.';
+  }
+
+  @override
+  String get cannotDeleteLastProfile => 'Keep at least one profile';
+
+  @override
+  String get profileNameHint => 'e.g. Alex, Sam';
+
+  @override
+  String get profileCreated => 'Profile created';
+
+  @override
+  String profileSwitched(String name) {
+    return 'Switched to $name';
+  }
+
+  @override
+  String get profileDeleted => 'Profile deleted';
+
+  @override
+  String get switchWhileWorkoutTitle => 'Workout in progress?';
+
+  @override
+  String get switchWhileWorkoutBody =>
+      'The open workout will stay with the current profile. Switch anyway?';
+
+  @override
+  String get activeBadge => 'Active';
+
+  @override
+  String get selectProfile => 'Select profile';
 }

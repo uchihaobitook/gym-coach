@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gym_coach/core/constants/app_constants.dart';
+import 'package:gym_coach/core/theme/app_colors.dart';
 import 'package:gym_coach/core/theme/app_theme.dart';
 import 'package:gym_coach/core/widgets/gym_card.dart';
 import 'package:gym_coach/core/widgets/loading_view.dart';
@@ -12,10 +13,12 @@ import 'package:gym_coach/data/repositories/backup_repository.dart';
 import 'package:gym_coach/l10n/l10n.dart';
 import 'package:gym_coach/providers/exercise_strength_provider.dart';
 import 'package:gym_coach/providers/measurement_provider.dart';
+import 'package:gym_coach/providers/profile_provider.dart';
 import 'package:gym_coach/providers/program_provider.dart';
 import 'package:gym_coach/providers/repository_providers.dart';
 import 'package:gym_coach/providers/settings_provider.dart';
 import 'package:gym_coach/providers/workout_logs_provider.dart';
+import 'package:go_router/go_router.dart';
 
 class SettingsScreen extends ConsumerStatefulWidget {
   const SettingsScreen({super.key});
@@ -25,15 +28,8 @@ class SettingsScreen extends ConsumerStatefulWidget {
 }
 
 class _SettingsScreenState extends ConsumerState<SettingsScreen> {
-  final _nameController = TextEditingController();
   bool _backupBusy = false;
   bool _updateBusy = false;
-
-  @override
-  void dispose() {
-    _nameController.dispose();
-    super.dispose();
-  }
 
   Future<void> _exportBackup() async {
     final l10n = context.l10n;
@@ -79,6 +75,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
       ref.invalidate(measurementsProvider);
       ref.invalidate(workoutProgramProvider);
       ref.invalidate(allExerciseStrengthProfilesProvider);
+      ref.invalidate(profilesProvider);
     }
 
     ScaffoldMessenger.of(context).showSnackBar(
@@ -129,10 +126,6 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
         loading: () => const LoadingView(),
         error: (e, _) => Center(child: Text(l10n.errorPrefix('$e'))),
         data: (settings) {
-          if (_nameController.text != settings.userName) {
-            _nameController.text = settings.userName;
-          }
-
           return ListView(
             padding: EdgeInsets.fromLTRB(20.w, 12.h, 20.w, 32.h),
             children: [
@@ -279,18 +272,47 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               SizedBox(height: 20.h),
               SectionHeader(title: l10n.profile),
               GymCard(
-                child: TextField(
-                  controller: _nameController,
-                  decoration: InputDecoration(
-                    labelText: l10n.yourName,
-                    hintText: l10n.nameHint,
-                  ),
-                  onSubmitted: (v) => ref
-                      .read(settingsProvider.notifier)
-                      .setName(v),
-                  onEditingComplete: () => ref
-                      .read(settingsProvider.notifier)
-                      .setName(_nameController.text),
+                child: Column(
+                  children: [
+                    ListTile(
+                      contentPadding: EdgeInsets.zero,
+                      leading: CircleAvatar(
+                        backgroundColor:
+                            AppColors.primary.withValues(alpha: 0.18),
+                        child: Text(
+                          ref.watch(currentProfileProvider)?.initials ?? '?',
+                          style: TextStyle(
+                            color: AppColors.primary,
+                            fontWeight: FontWeight.w800,
+                          ),
+                        ),
+                      ),
+                      title: Text(l10n.currentProfile),
+                      subtitle: Text(
+                        ref.watch(currentProfileProvider)?.name ??
+                            settings.userName,
+                      ),
+                      trailing: const Icon(Icons.chevron_right_rounded),
+                      onTap: () => context.push('/profiles'),
+                    ),
+                    Divider(color: gymTheme.border.withValues(alpha: 0.4)),
+                    ListTile(
+                      contentPadding: EdgeInsets.zero,
+                      leading: const Icon(Icons.swap_horiz_rounded),
+                      title: Text(l10n.switchProfile),
+                      subtitle: Text(l10n.profilesSubtitle),
+                      trailing: const Icon(Icons.chevron_right_rounded),
+                      onTap: () => context.push('/profiles'),
+                    ),
+                    Divider(color: gymTheme.border.withValues(alpha: 0.4)),
+                    ListTile(
+                      contentPadding: EdgeInsets.zero,
+                      leading: const Icon(Icons.person_add_alt_1_rounded),
+                      title: Text(l10n.addProfile),
+                      trailing: const Icon(Icons.chevron_right_rounded),
+                      onTap: () => context.push('/profiles'),
+                    ),
+                  ],
                 ),
               ),
               SizedBox(height: 20.h),

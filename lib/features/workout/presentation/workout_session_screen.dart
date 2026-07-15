@@ -17,7 +17,7 @@ import 'package:gym_coach/data/models/workout_log.dart';
 import 'package:gym_coach/l10n/l10n.dart';
 import 'package:gym_coach/providers/active_workout_provider.dart';
 import 'package:gym_coach/providers/program_provider.dart';
-import 'package:gym_coach/providers/repository_providers.dart';
+import 'package:gym_coach/providers/rest_timer_provider.dart';
 import 'package:gym_coach/providers/settings_provider.dart';
 
 import 'widgets/exercise_session_card.dart';

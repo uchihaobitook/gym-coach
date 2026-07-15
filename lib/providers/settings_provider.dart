@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../data/models/app_settings.dart';
 import '../data/repositories/settings_repository.dart';
+import 'active_profile_provider.dart';
 import 'repository_providers.dart';
 
 final settingsProvider =
@@ -49,7 +50,10 @@ class SettingsNotifier extends AsyncNotifier<AppSettings> {
   SettingsRepository get _repo => ref.read(settingsRepositoryProvider);
 
   @override
-  Future<AppSettings> build() => _repo.load();
+  Future<AppSettings> build() async {
+    await ref.watch(profileBootstrapProvider.future);
+    return _repo.load();
+  }
 
   Future<void> _persist(AppSettings Function(AppSettings) transform) async {
     state = await AsyncValue.guard(() => _repo.update(transform));

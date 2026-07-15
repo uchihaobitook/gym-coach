@@ -2,18 +2,18 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
-import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../../core/constants/app_constants.dart';
 import '../datasources/exercise_history_datasource.dart';
-import '../datasources/local_database.dart';
 import '../datasources/measurement_datasource.dart';
 import '../datasources/settings_datasource.dart';
 import '../datasources/workout_log_datasource.dart';
+import '../models/local_profile.dart';
 import '../models/measurement_models.dart';
 import '../models/workout_log.dart';
+import 'profile_repository.dart';
 
 /// Machine-readable import failure codes mapped to l10n in the UI.
 abstract final class BackupErrorCodes {
@@ -22,7 +22,6 @@ abstract final class BackupErrorCodes {
   static const invalidFormat = 'invalid_format';
 }
 
-/// Result of a backup import operation.
 class BackupImportResult {
   const BackupImportResult({
     required this.success,
@@ -41,7 +40,6 @@ class BackupImportResult {
   bool get wasCancelled => error == BackupErrorCodes.cancelled;
 }
 
-/// Result of a backup export operation.
 class BackupExportResult {
   const BackupExportResult({
     required this.success,
@@ -54,32 +52,31 @@ class BackupExportResult {
   final String? error;
 }
 
-/// Exports and imports all local app data as a single JSON backup.
+/// Exports and imports the **active profile** only.
 class BackupRepository {
   BackupRepository({
-    LocalDatabase? database,
-    SettingsDatasource? settingsDatasource,
-    WorkoutLogDatasource? workoutLogDatasource,
-    MeasurementDatasource? measurementDatasource,
-    ExerciseHistoryDatasource? exerciseHistoryDatasource,
-  })  : _database = database ?? LocalDatabase.instance,
-        _settingsDatasource = settingsDatasource ?? SettingsDatasource(),
-        _workoutLogDatasource = workoutLogDatasource ?? WorkoutLogDatasource(),
-        _measurementDatasource =
-            measurementDatasource ?? MeasurementDatasource(),
-        _exerciseHistoryDatasource =
-            exerciseHistoryDatasource ?? ExerciseHistoryDatasource();
+    required this.profileId,
+    required SettingsDatasource settingsDatasource,
+    required WorkoutLogDatasource workoutLogDatasource,
+    required MeasurementDatasource measurementDatasource,
+    required ExerciseHistoryDatasource exerciseHistoryDatasource,
+    ProfileRepository? profileRepository,
+  })  : _settingsDatasource = settingsDatasource,
+        _workoutLogDatasource = workoutLogDatasource,
+        _measurementDatasource = measurementDatasource,
+        _exerciseHistoryDatasource = exerciseHistoryDatasource,
+        _profileRepository = profileRepository ?? ProfileRepository();
 
-  final LocalDatabase _database;
+  final String profileId;
   final SettingsDatasource _settingsDatasource;
   final WorkoutLogDatasource _workoutLogDatasource;
   final MeasurementDatasource _measurementDatasource;
   final ExerciseHistoryDatasource _exerciseHistoryDatasource;
+  final ProfileRepository _profileRepository;
 
-  static const String _backupVersion = '1.1';
+  static const String _backupVersion = '2.0';
   static const String _exportFileName = 'gym_coach_backup.json';
 
-  /// Builds a JSON map containing all local data.
   Future<Map<String, dynamic>> exportToMap() async {
     final settings = await _settingsDatasource.exportJson();
     final workoutLogs = (await _workoutLogDatasource.getAll())
@@ -91,11 +88,14 @@ class BackupRepository {
     final exerciseHistory = (await _exerciseHistoryDatasource.getAll())
         .map((p) => p.toJson())
         .toList();
+    final profile = await _profileRepository.getById(profileId);
 
     return {
       'version': _backupVersion,
+      'scope': 'activeProfile',
       'appName': AppConstants.appName,
       'exportedAt': DateTime.now().toIso8601String(),
+      'profile': profile?.toJson(),
       'settings': settings,
       'workoutLogs': workoutLogs,
       'bodyMeasurements': measurements,
@@ -103,9 +103,7 @@ class BackupRepository {
     };
   }
 
-  /// Restores all local data from a backup JSON map.
-  ///
-  /// Snapshots current boxes first so a mid-import crash can be rolled back.
+  /// Restores into the active profile only (does not clear other profiles).
   Future<BackupImportResult> importFromMap(Map<String, dynamic> data) async {
     if (!_looksLikeBackup(data)) {
       return const BackupImportResult(
@@ -114,7 +112,10 @@ class BackupRepository {
       );
     }
 
-    final snapshot = await _snapshotAll();
+    final logsSnapshot = await _workoutLogDatasource.getAll();
+    final measurementsSnapshot = await _measurementDatasource.getAll();
+    final historySnapshot = await _exerciseHistoryDatasource.getAll();
+    final settingsSnapshot = await _settingsDatasource.exportJson();
 
     try {
       final settingsJson = data['settings'];
@@ -124,8 +125,25 @@ class BackupRepository {
         );
       }
 
-      final workoutLogsJson = data['workoutLogs'];
+      final profileJson = data['profile'];
+      if (profileJson is Map) {
+        final imported = LocalProfile.fromJson(
+          Map<String, dynamic>.from(profileJson),
+        );
+        final existing = await _profileRepository.getById(profileId);
+        if (existing != null) {
+          await _profileRepository.save(
+            existing.copyWith(
+              name: imported.name,
+              updatedAt: DateTime.now(),
+              colorSeed: imported.colorSeed,
+            ),
+          );
+        }
+      }
+
       var workoutCount = 0;
+      final workoutLogsJson = data['workoutLogs'];
       if (workoutLogsJson is List) {
         final logs = workoutLogsJson
             .map((e) => WorkoutLog.fromJson(Map<String, dynamic>.from(e as Map)))
@@ -134,8 +152,8 @@ class BackupRepository {
         workoutCount = logs.length;
       }
 
-      final measurementsJson = data['bodyMeasurements'];
       var measurementCount = 0;
+      final measurementsJson = data['bodyMeasurements'];
       if (measurementsJson is List) {
         final measurements = measurementsJson
             .map(
@@ -148,8 +166,8 @@ class BackupRepository {
         measurementCount = measurements.length;
       }
 
-      final historyJson = data['exerciseHistory'];
       var profileCount = 0;
+      final historyJson = data['exerciseHistory'];
       if (historyJson is List) {
         final profiles = historyJson
             .map(
@@ -169,12 +187,14 @@ class BackupRepository {
         exerciseProfileCount: profileCount,
       );
     } catch (e) {
-      await _restoreSnapshot(snapshot);
+      await _workoutLogDatasource.replaceAll(logsSnapshot);
+      await _measurementDatasource.replaceAll(measurementsSnapshot);
+      await _exerciseHistoryDatasource.replaceAll(historySnapshot);
+      await _settingsDatasource.importJson(settingsSnapshot);
       return BackupImportResult(success: false, error: e.toString());
     }
   }
 
-  /// Writes a backup file atomically and opens the share sheet.
   Future<BackupExportResult> exportAndShare({
     required String subject,
     required String text,
@@ -206,7 +226,6 @@ class BackupRepository {
     }
   }
 
-  /// Picks a JSON backup file and imports its contents.
   Future<BackupImportResult> importFromFilePicker() async {
     try {
       final result = await FilePicker.platform.pickFiles(
@@ -255,53 +274,4 @@ class BackupRepository {
         data.containsKey('bodyMeasurements') ||
         data.containsKey('exerciseHistory');
   }
-
-  Future<_BoxSnapshot> _snapshotAll() async {
-    return _BoxSnapshot(
-      settings: _copyBox(_database.settingsBox),
-      workoutLogs: _copyBox(_database.workoutLogsBox),
-      measurements: _copyBox(_database.measurementsBox),
-      exerciseHistory: _copyBox(_database.exerciseHistoryBox),
-    );
-  }
-
-  Map<String, dynamic> _copyBox(Box box) {
-    final copy = <String, dynamic>{};
-    for (final key in box.keys) {
-      final value = box.get(key);
-      if (value is Map) {
-        copy[key.toString()] = Map<String, dynamic>.from(value);
-      } else if (value != null) {
-        copy[key.toString()] = value;
-      }
-    }
-    return copy;
-  }
-
-  Future<void> _restoreSnapshot(_BoxSnapshot snapshot) async {
-    await _restoreBox(_database.settingsBox, snapshot.settings);
-    await _restoreBox(_database.workoutLogsBox, snapshot.workoutLogs);
-    await _restoreBox(_database.measurementsBox, snapshot.measurements);
-    await _restoreBox(_database.exerciseHistoryBox, snapshot.exerciseHistory);
-  }
-
-  Future<void> _restoreBox(Box box, Map<String, dynamic> data) async {
-    await box.clear();
-    if (data.isEmpty) return;
-    await box.putAll(data);
-  }
-}
-
-class _BoxSnapshot {
-  const _BoxSnapshot({
-    required this.settings,
-    required this.workoutLogs,
-    required this.measurements,
-    required this.exerciseHistory,
-  });
-
-  final Map<String, dynamic> settings;
-  final Map<String, dynamic> workoutLogs;
-  final Map<String, dynamic> measurements;
-  final Map<String, dynamic> exerciseHistory;
 }

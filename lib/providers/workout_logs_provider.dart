@@ -4,6 +4,7 @@ import '../core/utils/stats_calculator.dart';
 import '../data/models/workout_log.dart';
 import '../data/repositories/workout_repository.dart';
 import 'exercise_strength_provider.dart';
+import 'active_profile_provider.dart';
 import 'repository_providers.dart';
 
 final workoutLogsProvider =
@@ -48,7 +49,10 @@ class WorkoutLogsNotifier extends AsyncNotifier<List<WorkoutLog>> {
   WorkoutRepository get _repo => ref.read(workoutRepositoryProvider);
 
   @override
-  Future<List<WorkoutLog>> build() => _repo.getAllLogs();
+  Future<List<WorkoutLog>> build() async {
+    await ref.watch(profileBootstrapProvider.future);
+    return _repo.getAllLogs();
+  }
 
   Future<void> refresh() async {
     state = const AsyncLoading();

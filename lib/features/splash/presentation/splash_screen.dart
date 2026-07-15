@@ -9,7 +9,7 @@ import 'package:gym_coach/core/theme/app_theme.dart';
 import 'package:gym_coach/core/widgets/loading_view.dart';
 import 'package:gym_coach/l10n/l10n.dart';
 import 'package:gym_coach/providers/program_provider.dart';
-import 'package:gym_coach/providers/repository_providers.dart';
+import 'package:gym_coach/providers/active_profile_provider.dart';
 
 class SplashScreen extends ConsumerStatefulWidget {
   const SplashScreen({super.key});
@@ -29,9 +29,9 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
 
   Future<void> _bootstrap() async {
     await Future.wait([
+      ref.read(profileBootstrapProvider.future),
       ref.read(workoutProgramProvider.future),
-      ref.read(settingsRepositoryProvider).load(),
-      Future<void>.delayed(const Duration(milliseconds: 1500)),
+      Future<void>.delayed(const Duration(milliseconds: 1200)),
     ]);
 
     if (!mounted || _navigated) return;

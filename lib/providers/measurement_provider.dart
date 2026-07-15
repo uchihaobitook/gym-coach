@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../data/models/measurement_models.dart';
 import '../data/repositories/measurement_repository.dart';
+import 'active_profile_provider.dart';
 import 'repository_providers.dart';
 
 final measurementsProvider =
@@ -13,7 +14,10 @@ class MeasurementsNotifier extends AsyncNotifier<List<BodyMeasurement>> {
   MeasurementRepository get _repo => ref.read(measurementRepositoryProvider);
 
   @override
-  Future<List<BodyMeasurement>> build() => _repo.getAll();
+  Future<List<BodyMeasurement>> build() async {
+    await ref.watch(profileBootstrapProvider.future);
+    return _repo.getAll();
+  }
 
   Future<void> refresh() async {
     state = const AsyncLoading();

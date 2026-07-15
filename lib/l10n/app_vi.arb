@@ -51,12 +51,31 @@
   "noVideoAvailable": "Bài tập này chưa có video",
   "openingVideo": "Đang mở video: {name}",
   "setsProgress": "{completed} / {total} hiệp",
+  "setNumber": "Hiệp {number}",
+  "@setNumber": {
+    "placeholders": {
+      "number": {"type": "int"}
+    }
+  },
   "watchDemo": "Xem demo",
   "targetSetsReps": "Mục tiêu: {sets} × {reps}",
   "previousBest": "Mốc trước: {weight}",
   "notes": "Ghi chú",
   "notesHint": "Kỹ thuật, cảm giác khi tập…",
   "reps": "Số lần",
+  "weight": "Mức tạ",
+  "decreaseValue": "Giảm {value}",
+  "@decreaseValue": {
+    "placeholders": {
+      "value": {"type": "String"}
+    }
+  },
+  "increaseValue": "Tăng {value}",
+  "@increaseValue": {
+    "placeholders": {
+      "value": {"type": "String"}
+    }
+  },
   "summary": "Tổng kết",
   "loadingSummary": "Đang tải tổng kết…",
   "couldNotLoadSummary": "Không tải được tổng kết",
@@ -155,9 +174,9 @@
   "nameHint": "VĐV",
   "sectionData": "Dữ liệu",
   "exportBackup": "Xuất sao lưu",
-  "exportBackupSubtitle": "Lưu và chia sẻ toàn bộ dữ liệu",
+  "exportBackupSubtitle": "Lưu và chia sẻ dữ liệu hồ sơ hiện tại",
   "importBackup": "Nhập sao lưu",
-  "importBackupSubtitle": "Khôi phục từ file JSON",
+  "importBackupSubtitle": "Khôi phục vào hồ sơ đang dùng",
   "restoreSubtitle": "Chọn file sao lưu để khôi phục",
   "appVersionLabel": "{appName} v{version}",
   "greetingMorning": "Chào buổi sáng",
@@ -250,5 +269,35 @@
   "updateFailed": "Cập nhật thất bại",
   "updateCancelled": "Đã hủy tải",
   "updatePermissionDenied": "Cần quyền cài ứng dụng từ nguồn không xác định",
-  "updateAlreadyRunning": "Đang có bản cập nhật khác đang chạy"
+  "updateAlreadyRunning": "Đang có bản cập nhật khác đang chạy",
+  "profilesTitle": "Hồ sơ",
+  "profilesSubtitle": "Mỗi người một dữ liệu tập luyện riêng",
+  "currentProfile": "Hồ sơ hiện tại",
+  "switchProfile": "Chuyển hồ sơ",
+  "addProfile": "Thêm hồ sơ",
+  "createProfile": "Tạo hồ sơ",
+  "editProfile": "Sửa hồ sơ",
+  "renameProfile": "Đổi tên",
+  "deleteProfile": "Xóa hồ sơ",
+  "deleteProfileTitle": "Xóa hồ sơ?",
+  "deleteProfileBody": "Toàn bộ buổi tập, số đo và tiến độ của \"{name}\" sẽ bị xóa. Không thể hoàn tác.",
+  "@deleteProfileBody": {
+    "placeholders": {
+      "name": {"type": "String"}
+    }
+  },
+  "cannotDeleteLastProfile": "Phải giữ ít nhất một hồ sơ",
+  "profileNameHint": "Ví dụ: Anh A, Chị B",
+  "profileCreated": "Đã tạo hồ sơ",
+  "profileSwitched": "Đã chuyển sang {name}",
+  "@profileSwitched": {
+    "placeholders": {
+      "name": {"type": "String"}
+    }
+  },
+  "profileDeleted": "Đã xóa hồ sơ",
+  "switchWhileWorkoutTitle": "Đang có buổi tập?",
+  "switchWhileWorkoutBody": "Buổi tập đang mở sẽ được giữ trong hồ sơ hiện tại. Bạn vẫn muốn chuyển?",
+  "activeBadge": "Đang dùng",
+  "selectProfile": "Chọn hồ sơ"
 }

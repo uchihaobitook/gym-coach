@@ -188,6 +188,11 @@ class AppLocalizationsVi extends AppLocalizations {
   }
 
   @override
+  String setNumber(int number) {
+    return 'Hiệp $number';
+  }
+
+  @override
   String get watchDemo => 'Xem demo';
 
   @override
@@ -208,6 +213,19 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get reps => 'Số lần';
+
+  @override
+  String get weight => 'Mức tạ';
+
+  @override
+  String decreaseValue(String value) {
+    return 'Giảm $value';
+  }
+
+  @override
+  String increaseValue(String value) {
+    return 'Tăng $value';
+  }
 
   @override
   String get summary => 'Tổng kết';
@@ -520,13 +538,13 @@ class AppLocalizationsVi extends AppLocalizations {
   String get exportBackup => 'Xuất sao lưu';
 
   @override
-  String get exportBackupSubtitle => 'Lưu và chia sẻ toàn bộ dữ liệu';
+  String get exportBackupSubtitle => 'Lưu và chia sẻ dữ liệu hồ sơ hiện tại';
 
   @override
   String get importBackup => 'Nhập sao lưu';
 
   @override
-  String get importBackupSubtitle => 'Khôi phục từ file JSON';
+  String get importBackupSubtitle => 'Khôi phục vào hồ sơ đang dùng';
 
   @override
   String get restoreSubtitle => 'Chọn file sao lưu để khôi phục';
@@ -732,4 +750,69 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get updateAlreadyRunning => 'Đang có bản cập nhật khác đang chạy';
+
+  @override
+  String get profilesTitle => 'Hồ sơ';
+
+  @override
+  String get profilesSubtitle => 'Mỗi người một dữ liệu tập luyện riêng';
+
+  @override
+  String get currentProfile => 'Hồ sơ hiện tại';
+
+  @override
+  String get switchProfile => 'Chuyển hồ sơ';
+
+  @override
+  String get addProfile => 'Thêm hồ sơ';
+
+  @override
+  String get createProfile => 'Tạo hồ sơ';
+
+  @override
+  String get editProfile => 'Sửa hồ sơ';
+
+  @override
+  String get renameProfile => 'Đổi tên';
+
+  @override
+  String get deleteProfile => 'Xóa hồ sơ';
+
+  @override
+  String get deleteProfileTitle => 'Xóa hồ sơ?';
+
+  @override
+  String deleteProfileBody(String name) {
+    return 'Toàn bộ buổi tập, số đo và tiến độ của \"$name\" sẽ bị xóa. Không thể hoàn tác.';
+  }
+
+  @override
+  String get cannotDeleteLastProfile => 'Phải giữ ít nhất một hồ sơ';
+
+  @override
+  String get profileNameHint => 'Ví dụ: Anh A, Chị B';
+
+  @override
+  String get profileCreated => 'Đã tạo hồ sơ';
+
+  @override
+  String profileSwitched(String name) {
+    return 'Đã chuyển sang $name';
+  }
+
+  @override
+  String get profileDeleted => 'Đã xóa hồ sơ';
+
+  @override
+  String get switchWhileWorkoutTitle => 'Đang có buổi tập?';
+
+  @override
+  String get switchWhileWorkoutBody =>
+      'Buổi tập đang mở sẽ được giữ trong hồ sơ hiện tại. Bạn vẫn muốn chuyển?';
+
+  @override
+  String get activeBadge => 'Đang dùng';
+
+  @override
+  String get selectProfile => 'Chọn hồ sơ';
 }

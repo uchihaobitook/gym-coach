@@ -1,62 +1,77 @@
 import '../../core/utils/json_helpers.dart';
+import '../../core/utils/profile_storage_keys.dart';
 import '../models/measurement_models.dart';
 import 'local_database.dart';
 
-/// Hive-backed CRUD for [BodyMeasurement] records stored as JSON maps.
+/// Hive-backed CRUD for [BodyMeasurement] records scoped to one profile.
 class MeasurementDatasource {
-  MeasurementDatasource({LocalDatabase? database})
-      : _database = database ?? LocalDatabase.instance;
+  MeasurementDatasource({
+    required this.profileId,
+    LocalDatabase? database,
+  }) : _database = database ?? LocalDatabase.instance;
 
+  final String profileId;
   final LocalDatabase _database;
 
-  static const String _recordKeyPrefix = 'measurement_';
-
-  /// Returns all measurements sorted by date descending (newest first).
   Future<List<BodyMeasurement>> getAll() async {
     final box = _database.measurementsBox;
-    final measurements = box.values
-        .map((raw) => BodyMeasurement.fromJson(deepJsonMap(raw)))
-        .toList();
+    final measurements = <BodyMeasurement>[];
+    for (final key in box.keys) {
+      final keyStr = key.toString();
+      if (!ProfileStorageKeys.belongsToProfile(keyStr, profileId)) continue;
+      final raw = box.get(key);
+      if (raw == null) continue;
+      measurements.add(BodyMeasurement.fromJson(deepJsonMap(raw)));
+    }
     measurements.sort((a, b) => b.date.compareTo(a.date));
     return measurements;
   }
 
-  /// Returns a measurement by id, or null if missing.
   Future<BodyMeasurement?> getById(String id) async {
-    final box = _database.measurementsBox;
-    final raw = box.get(_keyFor(id));
+    final raw = _database.measurementsBox.get(_keyFor(id));
     if (raw == null) return null;
     return BodyMeasurement.fromJson(deepJsonMap(raw));
   }
 
-  /// Persists a measurement (insert or update).
   Future<void> save(BodyMeasurement measurement) async {
-    final box = _database.measurementsBox;
-    await box.put(_keyFor(measurement.id), measurement.toJson());
+    await _database.measurementsBox.put(
+      _keyFor(measurement.id),
+      measurement.toJson(),
+    );
   }
 
-  /// Deletes a measurement by id.
   Future<void> delete(String id) async {
-    final box = _database.measurementsBox;
-    await box.delete(_keyFor(id));
+    await _database.measurementsBox.delete(_keyFor(id));
   }
 
-  /// Replaces all stored measurements with a snapshot rollback on failure.
+  /// Replaces only this profile's measurements.
   Future<void> replaceAll(List<BodyMeasurement> measurements) async {
     final box = _database.measurementsBox;
-    final snapshot = Map<dynamic, dynamic>.from(box.toMap());
+    final profileKeys = box.keys
+        .map((k) => k.toString())
+        .where((k) => ProfileStorageKeys.belongsToProfile(k, profileId))
+        .toList();
+    final snapshot = <String, dynamic>{
+      for (final key in profileKeys) key: box.get(key),
+    };
+
     try {
-      final next = <String, Map<String, dynamic>>{
+      for (final key in profileKeys) {
+        await box.delete(key);
+      }
+      if (measurements.isEmpty) return;
+      await box.putAll({
         for (final m in measurements) _keyFor(m.id): m.toJson(),
-      };
-      await box.clear();
-      if (next.isNotEmpty) await box.putAll(next);
+      });
     } catch (_) {
-      await box.clear();
+      for (final key in profileKeys) {
+        await box.delete(key);
+      }
       if (snapshot.isNotEmpty) await box.putAll(snapshot);
       rethrow;
     }
   }
 
-  String _keyFor(String id) => '$_recordKeyPrefix$id';
+  String _keyFor(String id) =>
+      ProfileStorageKeys.measurement(profileId, id);
 }

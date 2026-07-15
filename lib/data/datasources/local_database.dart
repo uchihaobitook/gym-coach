@@ -16,6 +16,7 @@ class LocalDatabase {
   Box? _workoutLogsBox;
   Box? _measurementsBox;
   Box? _exerciseHistoryBox;
+  Box? _profilesBox;
 
   bool get isOpen => _isOpen;
 
@@ -39,6 +40,11 @@ class LocalDatabase {
     return _exerciseHistoryBox!;
   }
 
+  Box get profilesBox {
+    _assertOpen();
+    return _profilesBox!;
+  }
+
   /// Initializes Hive and opens all application boxes.
   Future<void> open() async {
     if (_isOpen) return;
@@ -49,6 +55,7 @@ class LocalDatabase {
     _workoutLogsBox = await Hive.openBox(AppConstants.workoutLogsBox);
     _measurementsBox = await Hive.openBox(AppConstants.measurementsBox);
     _exerciseHistoryBox = await Hive.openBox(AppConstants.exerciseHistoryBox);
+    _profilesBox = await Hive.openBox(AppConstants.profilesBox);
 
     // Legacy empty box from earlier builds — drop if present.
     if (await Hive.boxExists(AppConstants.legacyProgramProgressBox)) {
@@ -66,11 +73,13 @@ class LocalDatabase {
     await _workoutLogsBox?.close();
     await _measurementsBox?.close();
     await _exerciseHistoryBox?.close();
+    await _profilesBox?.close();
 
     _settingsBox = null;
     _workoutLogsBox = null;
     _measurementsBox = null;
     _exerciseHistoryBox = null;
+    _profilesBox = null;
     _isOpen = false;
   }
 
@@ -82,6 +91,7 @@ class LocalDatabase {
       _workoutLogsBox!.clear(),
       _measurementsBox!.clear(),
       _exerciseHistoryBox!.clear(),
+      _profilesBox!.clear(),
     ]);
   }
 

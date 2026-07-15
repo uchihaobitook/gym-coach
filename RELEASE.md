@@ -2,7 +2,12 @@
 
 Repo: https://github.com/uchihaobitook/gym-coach
 
-## Yêu cầu
+## Hồ sơ A/B
+
+App hỗ trợ nhiều hồ sơ trên một điện thoại. Dữ liệu buổi tập/số đo/tiến độ tách riêng.
+Sao lưu v2.0 chỉ xuất/nhập **hồ sơ đang dùng**.
+
+## Yêu cầu OTA
 
 - Repo phải **Public** (hoặc app không tải được APK từ GitHub).
 - Mỗi bản mới phải tăng `version` trong `pubspec.yaml`, ví dụ `1.0.1+2`.

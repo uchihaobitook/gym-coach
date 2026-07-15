@@ -6,6 +6,7 @@ import '../data/models/workout_log.dart';
 import '../data/repositories/workout_repository.dart';
 import 'program_provider.dart';
 import 'repository_providers.dart';
+import 'rest_timer_provider.dart';
 import 'settings_provider.dart';
 import 'workout_logs_provider.dart';
 

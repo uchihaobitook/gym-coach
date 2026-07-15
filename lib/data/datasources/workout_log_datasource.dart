@@ -1,59 +1,57 @@
 import '../../core/utils/json_helpers.dart';
+import '../../core/utils/profile_storage_keys.dart';
 import '../models/workout_log.dart';
 import 'local_database.dart';
 
-/// Hive-backed CRUD for [WorkoutLog] records stored as JSON maps.
+/// Hive-backed CRUD for [WorkoutLog] records scoped to one profile.
 class WorkoutLogDatasource {
-  WorkoutLogDatasource({LocalDatabase? database})
-      : _database = database ?? LocalDatabase.instance;
+  WorkoutLogDatasource({
+    required this.profileId,
+    LocalDatabase? database,
+  }) : _database = database ?? LocalDatabase.instance;
 
+  final String profileId;
   final LocalDatabase _database;
 
-  static const String _recordKeyPrefix = 'log_';
-
-  /// Returns every stored workout log, newest first.
+  /// Returns every stored workout log for this profile, newest first.
   Future<List<WorkoutLog>> getAll() async {
     final box = _database.workoutLogsBox;
-    final logs = box.values
-        .map((raw) => WorkoutLog.fromJson(deepJsonMap(raw)))
-        .toList();
+    final logs = <WorkoutLog>[];
+    for (final key in box.keys) {
+      final keyStr = key.toString();
+      if (!ProfileStorageKeys.belongsToProfile(keyStr, profileId)) continue;
+      final raw = box.get(key);
+      if (raw == null) continue;
+      logs.add(WorkoutLog.fromJson(deepJsonMap(raw)));
+    }
     logs.sort((a, b) => b.startedAt.compareTo(a.startedAt));
     return logs;
   }
 
-  /// Returns a single log by id, or null if missing.
   Future<WorkoutLog?> getById(String id) async {
-    final box = _database.workoutLogsBox;
-    final raw = box.get(_keyFor(id));
+    final raw = _database.workoutLogsBox.get(_keyFor(id));
     if (raw == null) return null;
     return WorkoutLog.fromJson(deepJsonMap(raw));
   }
 
-  /// Returns only completed workout logs, newest first.
   Future<List<WorkoutLog>> getCompleted() async {
     final all = await getAll();
     return all.where((log) => log.isCompleted).toList();
   }
 
-  /// Returns logs for a specific program day id, newest first.
   Future<List<WorkoutLog>> getByDayId(String dayId) async {
     final all = await getAll();
     return all.where((log) => log.dayId == dayId).toList();
   }
 
-  /// Persists a workout log (insert or update).
   Future<void> save(WorkoutLog log) async {
-    final box = _database.workoutLogsBox;
-    await box.put(_keyFor(log.id), log.toJson());
+    await _database.workoutLogsBox.put(_keyFor(log.id), log.toJson());
   }
 
-  /// Deletes a workout log by id.
   Future<void> delete(String id) async {
-    final box = _database.workoutLogsBox;
-    await box.delete(_keyFor(id));
+    await _database.workoutLogsBox.delete(_keyFor(id));
   }
 
-  /// Returns the most recent completed weight used for [exerciseId].
   Future<double?> getLatestForExercise(String exerciseId) async {
     final completed = await getCompleted();
     for (final log in completed) {
@@ -70,22 +68,33 @@ class WorkoutLogDatasource {
     return null;
   }
 
-  /// Replaces all stored logs with [logs] using a snapshot rollback on failure.
+  /// Replaces only this profile's logs (does not touch other profiles).
   Future<void> replaceAll(List<WorkoutLog> logs) async {
     final box = _database.workoutLogsBox;
-    final snapshot = Map<dynamic, dynamic>.from(box.toMap());
+    final profileKeys = box.keys
+        .map((k) => k.toString())
+        .where((k) => ProfileStorageKeys.belongsToProfile(k, profileId))
+        .toList();
+    final snapshot = <String, dynamic>{
+      for (final key in profileKeys) key: box.get(key),
+    };
+
     try {
-      final next = <String, Map<String, dynamic>>{
+      for (final key in profileKeys) {
+        await box.delete(key);
+      }
+      if (logs.isEmpty) return;
+      await box.putAll({
         for (final log in logs) _keyFor(log.id): log.toJson(),
-      };
-      await box.clear();
-      if (next.isNotEmpty) await box.putAll(next);
+      });
     } catch (_) {
-      await box.clear();
+      for (final key in profileKeys) {
+        await box.delete(key);
+      }
       if (snapshot.isNotEmpty) await box.putAll(snapshot);
       rethrow;
     }
   }
 
-  String _keyFor(String id) => '$_recordKeyPrefix$id';
+  String _keyFor(String id) => ProfileStorageKeys.log(profileId, id);
 }

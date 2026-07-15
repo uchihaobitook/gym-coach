@@ -404,6 +404,12 @@ abstract class AppLocalizations {
   /// **'{completed} / {total} sets'**
   String setsProgress(int completed, int total);
 
+  /// No description provided for @setNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Set {number}'**
+  String setNumber(int number);
+
   /// No description provided for @watchDemo.
   ///
   /// In en, this message translates to:
@@ -439,6 +445,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Reps'**
   String get reps;
+
+  /// No description provided for @weight.
+  ///
+  /// In en, this message translates to:
+  /// **'Weight'**
+  String get weight;
+
+  /// No description provided for @decreaseValue.
+  ///
+  /// In en, this message translates to:
+  /// **'Decrease {value}'**
+  String decreaseValue(String value);
+
+  /// No description provided for @increaseValue.
+  ///
+  /// In en, this message translates to:
+  /// **'Increase {value}'**
+  String increaseValue(String value);
 
   /// No description provided for @summary.
   ///
@@ -1031,7 +1055,7 @@ abstract class AppLocalizations {
   /// No description provided for @exportBackupSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Save and share all app data'**
+  /// **'Save and share the current profile'**
   String get exportBackupSubtitle;
 
   /// No description provided for @importBackup.
@@ -1043,7 +1067,7 @@ abstract class AppLocalizations {
   /// No description provided for @importBackupSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Restore from JSON file'**
+  /// **'Restore into the active profile'**
   String get importBackupSubtitle;
 
   /// No description provided for @restoreSubtitle.
@@ -1405,6 +1429,126 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Another update is already in progress'**
   String get updateAlreadyRunning;
+
+  /// No description provided for @profilesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Profiles'**
+  String get profilesTitle;
+
+  /// No description provided for @profilesSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Separate training data for each person'**
+  String get profilesSubtitle;
+
+  /// No description provided for @currentProfile.
+  ///
+  /// In en, this message translates to:
+  /// **'Current profile'**
+  String get currentProfile;
+
+  /// No description provided for @switchProfile.
+  ///
+  /// In en, this message translates to:
+  /// **'Switch profile'**
+  String get switchProfile;
+
+  /// No description provided for @addProfile.
+  ///
+  /// In en, this message translates to:
+  /// **'Add profile'**
+  String get addProfile;
+
+  /// No description provided for @createProfile.
+  ///
+  /// In en, this message translates to:
+  /// **'Create profile'**
+  String get createProfile;
+
+  /// No description provided for @editProfile.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit profile'**
+  String get editProfile;
+
+  /// No description provided for @renameProfile.
+  ///
+  /// In en, this message translates to:
+  /// **'Rename'**
+  String get renameProfile;
+
+  /// No description provided for @deleteProfile.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete profile'**
+  String get deleteProfile;
+
+  /// No description provided for @deleteProfileTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete profile?'**
+  String get deleteProfileTitle;
+
+  /// No description provided for @deleteProfileBody.
+  ///
+  /// In en, this message translates to:
+  /// **'All workouts, measurements, and progress for \"{name}\" will be deleted. This cannot be undone.'**
+  String deleteProfileBody(String name);
+
+  /// No description provided for @cannotDeleteLastProfile.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep at least one profile'**
+  String get cannotDeleteLastProfile;
+
+  /// No description provided for @profileNameHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. Alex, Sam'**
+  String get profileNameHint;
+
+  /// No description provided for @profileCreated.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile created'**
+  String get profileCreated;
+
+  /// No description provided for @profileSwitched.
+  ///
+  /// In en, this message translates to:
+  /// **'Switched to {name}'**
+  String profileSwitched(String name);
+
+  /// No description provided for @profileDeleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile deleted'**
+  String get profileDeleted;
+
+  /// No description provided for @switchWhileWorkoutTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Workout in progress?'**
+  String get switchWhileWorkoutTitle;
+
+  /// No description provided for @switchWhileWorkoutBody.
+  ///
+  /// In en, this message translates to:
+  /// **'The open workout will stay with the current profile. Switch anyway?'**
+  String get switchWhileWorkoutBody;
+
+  /// No description provided for @activeBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'Active'**
+  String get activeBadge;
+
+  /// No description provided for @selectProfile.
+  ///
+  /// In en, this message translates to:
+  /// **'Select profile'**
+  String get selectProfile;
 }
 
 class _AppLocalizationsDelegate

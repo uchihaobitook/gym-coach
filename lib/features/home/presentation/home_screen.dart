@@ -17,6 +17,7 @@ import 'package:gym_coach/data/models/app_settings.dart';
 import 'package:gym_coach/data/models/program_models.dart';
 import 'package:gym_coach/data/models/workout_log.dart';
 import 'package:gym_coach/l10n/l10n.dart';
+import 'package:gym_coach/providers/profile_provider.dart';
 import 'package:gym_coach/providers/program_provider.dart';
 import 'package:gym_coach/providers/settings_provider.dart';
 import 'package:gym_coach/providers/workout_logs_provider.dart';
@@ -34,6 +35,7 @@ class HomeScreen extends ConsumerWidget {
     final stats = ref.watch(statsProvider);
     final logs = ref.watch(workoutLogsProvider).value ?? const [];
     final activeSession = ref.watch(activeSessionProvider);
+    final currentProfile = ref.watch(currentProfileProvider);
     final l10n = context.l10n;
 
     return Scaffold(
@@ -61,6 +63,9 @@ class HomeScreen extends ConsumerWidget {
               dayIndex: settings.currentDayIndex,
               programWeeks: program.weeks,
               activeSession: activeSession,
+              profileName: currentProfile?.name ?? settings.userName,
+              profileInitials: currentProfile?.initials,
+              onProfileTap: () => context.push('/profiles'),
               onQuickStart: (dayId) => context.push('/workout/$dayId'),
               isDayCompleted: (dayId) =>
                   logs.any((l) => l.dayId == dayId && l.isCompleted),
@@ -80,8 +85,11 @@ class _HomeContent extends StatelessWidget {
     required this.dayIndex,
     required this.programWeeks,
     required this.activeSession,
+    required this.profileName,
     required this.onQuickStart,
     required this.isDayCompleted,
+    this.profileInitials,
+    this.onProfileTap,
   });
 
   final AppSettings settings;
@@ -90,6 +98,9 @@ class _HomeContent extends StatelessWidget {
   final int dayIndex;
   final List<WeekProgramTemplate> programWeeks;
   final WorkoutLog? activeSession;
+  final String profileName;
+  final String? profileInitials;
+  final VoidCallback? onProfileTap;
   final void Function(String dayId) onQuickStart;
   final bool Function(String dayId) isDayCompleted;
 
@@ -117,8 +128,10 @@ class _HomeContent extends StatelessWidget {
           padding: EdgeInsets.fromLTRB(20.w, 16.h, 20.w, 8.h),
           sliver: SliverToBoxAdapter(
             child: GreetingHeader(
-              userName: settings.userName,
+              userName: profileName,
               subtitle: Formatters.formatMediumDate(DateTime.now(), l10n: l10n),
+              profileInitials: profileInitials,
+              onProfileTap: onProfileTap,
             ),
           ),
         ),

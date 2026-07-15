@@ -10,12 +10,12 @@ import 'program_repository.dart';
 /// Repository orchestrating workout session persistence and history.
 class WorkoutRepository {
   WorkoutRepository({
-    WorkoutLogDatasource? logDatasource,
-    ExerciseHistoryDatasource? historyDatasource,
+    required WorkoutLogDatasource logDatasource,
+    required ExerciseHistoryDatasource historyDatasource,
     ProgramRepository? programRepository,
     Uuid? uuid,
-  })  : _logDatasource = logDatasource ?? WorkoutLogDatasource(),
-        _historyDatasource = historyDatasource ?? ExerciseHistoryDatasource(),
+  })  : _logDatasource = logDatasource,
+        _historyDatasource = historyDatasource,
         _programRepository = programRepository ?? ProgramRepository(),
         _uuid = uuid ?? const Uuid();
 
@@ -36,7 +36,6 @@ class WorkoutRepository {
   Future<double?> getPreviousWeight(String exerciseId) =>
       _logDatasource.getLatestForExercise(exerciseId);
 
-  /// Starts a new in-progress workout for the given day template.
   Future<WorkoutLog> startWorkout({
     required WorkoutDayTemplate day,
     required int weekNumber,
@@ -83,10 +82,8 @@ class WorkoutRepository {
     return log;
   }
 
-  /// Persists an in-progress workout log.
   Future<void> saveLog(WorkoutLog log) => _logDatasource.save(log);
 
-  /// Marks a workout complete, estimates calories, and records exercise history.
   Future<WorkoutLog> completeWorkout(WorkoutLog log) async {
     final endedAt = log.endedAt ?? DateTime.now();
     final duration = endedAt.difference(log.startedAt);
@@ -105,7 +102,6 @@ class WorkoutRepository {
 
   Future<void> deleteLog(String id) => _logDatasource.delete(id);
 
-  /// Resolves a day template from the program by id.
   Future<WorkoutDayTemplate?> findDayTemplate(String dayId) =>
       _programRepository.findDay(dayId);
 }

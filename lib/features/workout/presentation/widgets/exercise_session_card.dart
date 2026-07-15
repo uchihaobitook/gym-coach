@@ -229,6 +229,7 @@ class _ExerciseSessionCardState extends State<ExerciseSessionCard> {
                       setIndex: entry.key,
                       loggedSet: entry.value,
                       targetReps: parseTargetReps(widget.template.reps),
+                      weightStepKg: _weightStepKg(widget.template),
                       weightUnit: widget.weightUnit,
                       onToggle: (completed) =>
                           widget.onSetToggled(entry.key, completed),
@@ -263,11 +264,18 @@ class _ExerciseSessionCardState extends State<ExerciseSessionCard> {
   }
 }
 
+double _weightStepKg(ExerciseTemplate template) {
+  final muscle = template.muscleGroup.toLowerCase();
+  final isShoulder = muscle.contains('vai') || muscle.contains('shoulder');
+  return isShoulder ? 2.5 : 5;
+}
+
 class _SetRow extends StatefulWidget {
   const _SetRow({
     required this.setIndex,
     required this.loggedSet,
     required this.targetReps,
+    required this.weightStepKg,
     required this.weightUnit,
     required this.onToggle,
     required this.onWeightChanged,
@@ -277,6 +285,7 @@ class _SetRow extends StatefulWidget {
   final int setIndex;
   final LoggedSet loggedSet;
   final int targetReps;
+  final double weightStepKg;
   final WeightUnit weightUnit;
   final ValueChanged<bool> onToggle;
   final ValueChanged<double> onWeightChanged;
@@ -339,83 +348,195 @@ class _SetRowState extends State<_SetRow> {
     super.dispose();
   }
 
+  void _changeWeight(double direction) {
+    final currentDisplay = double.tryParse(_weightController.text) ?? 0;
+    final currentKg = Formatters.displayToKg(
+      currentDisplay,
+      widget.weightUnit,
+    );
+    final nextKg = (currentKg + widget.weightStepKg * direction)
+        .clamp(0.0, double.infinity);
+    final nextDisplay = Formatters.kgToDisplay(nextKg, widget.weightUnit);
+    _weightController.text = _formatDisplay(nextDisplay);
+    widget.onWeightChanged(nextKg);
+    HapticFeedback.selectionClick();
+  }
+
+  void _changeReps(int direction) {
+    final current = int.tryParse(_repsController.text) ?? widget.targetReps;
+    final next = (current + direction).clamp(1, 999);
+    _repsController.text = next.toString();
+    widget.onRepsChanged(next);
+    HapticFeedback.selectionClick();
+  }
+
   @override
   Widget build(BuildContext context) {
     final gymTheme = context.gymTheme;
     final l10n = context.l10n;
     final unitLabel =
         widget.weightUnit == WeightUnit.kg ? l10n.unitKg : l10n.unitLbs;
+    final displayStep = Formatters.kgToDisplay(
+      widget.weightStepKg,
+      widget.weightUnit,
+    );
+    final weightStepLabel = '${_formatDisplay(displayStep)} $unitLabel';
 
-    return Padding(
-      padding: EdgeInsets.only(bottom: 10.h),
-      child: Row(
+    return Container(
+      margin: EdgeInsets.only(bottom: 10.h),
+      padding: EdgeInsets.fromLTRB(12.w, 8.h, 8.w, 12.h),
+      decoration: BoxDecoration(
+        color: gymTheme.elevatedSurface.withValues(alpha: 0.55),
+        borderRadius: BorderRadius.circular(14.r),
+      ),
+      child: Column(
         children: [
-          SizedBox(
-            width: 36.w,
-            child: Text(
-              '${widget.setIndex + 1}',
-              style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                    fontWeight: FontWeight.w700,
-                    color: gymTheme.secondaryText,
+          Row(
+            children: [
+              Expanded(
+                child: Text(
+                  l10n.setNumber(widget.setIndex + 1),
+                  style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                        fontWeight: FontWeight.w700,
+                      ),
+                ),
+              ),
+              Checkbox(
+                value: widget.loggedSet.completed,
+                onChanged: (v) => widget.onToggle(v ?? false),
+              ),
+            ],
+          ),
+          SizedBox(height: 4.h),
+          Row(
+            children: [
+              Expanded(
+                child: _StepperField(
+                  label: '${l10n.weight} ($unitLabel)',
+                  controller: _weightController,
+                  keyboardType: const TextInputType.numberWithOptions(
+                    decimal: true,
                   ),
-            ),
-          ),
-          Expanded(
-            flex: 2,
-            child: TextField(
-              controller: _weightController,
-              keyboardType: const TextInputType.numberWithOptions(decimal: true),
-              inputFormatters: [
-                FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*')),
-              ],
-              decoration: InputDecoration(
-                labelText: unitLabel,
-                isDense: true,
-                contentPadding: EdgeInsets.symmetric(
-                  horizontal: 12.w,
-                  vertical: 14.h,
+                  inputFormatters: [
+                    FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*')),
+                  ],
+                  decreaseTooltip: l10n.decreaseValue(weightStepLabel),
+                  increaseTooltip: l10n.increaseValue(weightStepLabel),
+                  onDecrease: () => _changeWeight(-1),
+                  onIncrease: () => _changeWeight(1),
+                  onChanged: (value) {
+                    final parsed = double.tryParse(value);
+                    if (parsed != null) {
+                      widget.onWeightChanged(
+                        Formatters.displayToKg(parsed, widget.weightUnit),
+                      );
+                    }
+                  },
                 ),
-                constraints: BoxConstraints(minHeight: 48.h),
               ),
-              onChanged: (v) {
-                final parsed = double.tryParse(v);
-                if (parsed != null) {
-                  widget.onWeightChanged(
-                    Formatters.displayToKg(parsed, widget.weightUnit),
-                  );
-                }
-              },
-              style: Theme.of(context).textTheme.bodyLarge,
-            ),
-          ),
-          SizedBox(width: 8.w),
-          Expanded(
-            child: TextField(
-              controller: _repsController,
-              keyboardType: TextInputType.number,
-              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-              decoration: InputDecoration(
-                labelText: l10n.reps,
-                isDense: true,
-                contentPadding: EdgeInsets.symmetric(
-                  horizontal: 12.w,
-                  vertical: 14.h,
+              SizedBox(width: 8.w),
+              Expanded(
+                child: _StepperField(
+                  label: l10n.reps,
+                  controller: _repsController,
+                  keyboardType: TextInputType.number,
+                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                  decreaseTooltip: l10n.decreaseValue('1 ${l10n.reps}'),
+                  increaseTooltip: l10n.increaseValue('1 ${l10n.reps}'),
+                  onDecrease: () => _changeReps(-1),
+                  onIncrease: () => _changeReps(1),
+                  onChanged: (value) {
+                    final parsed = int.tryParse(value);
+                    if (parsed != null) widget.onRepsChanged(parsed);
+                  },
                 ),
-                constraints: BoxConstraints(minHeight: 48.h),
               ),
-              onChanged: (v) {
-                final parsed = int.tryParse(v);
-                if (parsed != null) widget.onRepsChanged(parsed);
-              },
-            ),
-          ),
-          SizedBox(width: 4.w),
-          Checkbox(
-            value: widget.loggedSet.completed,
-            onChanged: (v) => widget.onToggle(v ?? false),
+            ],
           ),
         ],
       ),
+    );
+  }
+}
+
+class _StepperField extends StatelessWidget {
+  const _StepperField({
+    required this.label,
+    required this.controller,
+    required this.keyboardType,
+    required this.inputFormatters,
+    required this.decreaseTooltip,
+    required this.increaseTooltip,
+    required this.onDecrease,
+    required this.onIncrease,
+    required this.onChanged,
+  });
+
+  final String label;
+  final TextEditingController controller;
+  final TextInputType keyboardType;
+  final List<TextInputFormatter> inputFormatters;
+  final String decreaseTooltip;
+  final String increaseTooltip;
+  final VoidCallback onDecrease;
+  final VoidCallback onIncrease;
+  final ValueChanged<String> onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: EdgeInsets.only(left: 4.w, bottom: 5.h),
+          child: Text(
+            label,
+            style: Theme.of(context).textTheme.labelSmall,
+          ),
+        ),
+        Container(
+          height: 46.h,
+          decoration: BoxDecoration(
+            color: Theme.of(context).colorScheme.surface,
+            borderRadius: BorderRadius.circular(12.r),
+            border: Border.all(color: context.gymTheme.border),
+          ),
+          child: Row(
+            children: [
+              IconButton(
+                onPressed: onDecrease,
+                icon: const Icon(Icons.remove_rounded),
+                iconSize: 19.sp,
+                tooltip: decreaseTooltip,
+                visualDensity: VisualDensity.compact,
+              ),
+              Expanded(
+                child: TextField(
+                  controller: controller,
+                  keyboardType: keyboardType,
+                  inputFormatters: inputFormatters,
+                  textAlign: TextAlign.center,
+                  decoration: const InputDecoration(
+                    border: InputBorder.none,
+                    enabledBorder: InputBorder.none,
+                    focusedBorder: InputBorder.none,
+                    contentPadding: EdgeInsets.zero,
+                    isDense: true,
+                  ),
+                  onChanged: onChanged,
+                ),
+              ),
+              IconButton(
+                onPressed: onIncrease,
+                icon: const Icon(Icons.add_rounded),
+                iconSize: 19.sp,
+                tooltip: increaseTooltip,
+                visualDensity: VisualDensity.compact,
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }

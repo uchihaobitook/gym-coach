@@ -6,6 +6,7 @@ import '../../features/calendar/presentation/calendar_screen.dart';
 import '../../features/home/presentation/home_screen.dart';
 import '../../features/progress/presentation/progress_screen.dart';
 import '../../features/progress/presentation/strength_detail_screen.dart';
+import '../../features/profiles/presentation/profile_selection_screen.dart';
 import '../../features/settings/presentation/settings_screen.dart';
 import '../../features/shell/main_shell.dart';
 import '../widgets/app_update_checker.dart';
@@ -33,6 +34,12 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: '/',
         name: 'splash',
         builder: (context, state) => const SplashScreen(),
+      ),
+      GoRoute(
+        path: '/profiles',
+        name: 'profiles',
+        parentNavigatorKey: _rootNavigatorKey,
+        builder: (context, state) => const ProfileSelectionScreen(),
       ),
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) => AppUpdateChecker(
