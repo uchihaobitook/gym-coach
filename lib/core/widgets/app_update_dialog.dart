@@ -59,9 +59,11 @@ class _AppUpdateDialogState extends State<AppUpdateDialog> {
             case OtaStatus.CHECKSUM_ERROR:
               _status = l10n.updateFailed;
               _installing = false;
+              _progress = null;
             case OtaStatus.CANCELED:
               _status = l10n.updateCancelled;
               _installing = false;
+              _progress = null;
           }
         });
       }
@@ -70,6 +72,7 @@ class _AppUpdateDialogState extends State<AppUpdateDialog> {
       setState(() {
         _status = l10n.updateFailed;
         _installing = false;
+        _progress = null;
       });
     }
   }

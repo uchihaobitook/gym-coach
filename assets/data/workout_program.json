@@ -1,278 +1,406 @@
 {
-  "id": "coach_program_v1",
-  "name": "Chương trình Sức mạnh HLV",
-  "description": "Chương trình phát triển cơ và sức mạnh tiến triển trong 3 tuần, thiết kế bởi HLV cá nhân của bạn. Tập trung vào các động tác compound, khối lượng kiểm soát và tiến bộ đều đặn.",
+  "id": "personal_ppl_v2",
+  "name": "Lịch PPL + Upper/Lower",
+  "description": "Chương trình 3 tuần theo lịch HLV: Tuần 1 PPL, Tuần 2 Vai/Lưng, Tuần 3 Tay/Push. 5 buổi/tuần (nghỉ 1 ngày giữa tuần). Có thể đổi Upper/Lower lên đầu tuần rồi nghỉ 1 ngày, tập tiếp 3 ngày PPL.",
   "author": "HLV",
-  "version": "1.0",
+  "version": "2.0",
   "weeks": [
     {
       "weekNumber": 1,
-      "title": "Nền tảng",
-      "focus": "Kỹ thuật, kết nối cơ-não, mức tạ ban đầu",
+      "title": "Lịch 1 — PPL",
+      "focus": "Push Pull Leg + Upper/Lower. 3 bài kéo đầu buổi lưng: max sức. Buổi chân: volume cao, nhiều drop set.",
       "days": [
         {
           "id": "w1d1",
           "dayNumber": 1,
-          "name": "Đẩy Sức",
-          "muscleGroup": "Ngực · Vai · Cơ ba đầu",
-          "estimatedMinutes": 55,
-          "description": "Tập trung đẩy phần trên với các động tác đẩy compound.",
+          "name": "Lưng & Tay trước",
+          "muscleGroup": "Lưng · Cơ nhị đầu",
+          "estimatedMinutes": 75,
           "exercises": [
             {
-              "id": "ex_bench_press",
-              "name": "Barbell Bench Press",
+              "id": "ex_lat_pulldown",
+              "name": "Lat Pulldown",
+              "muscleGroup": "Cơ lưng rộng",
+              "sets": 4,
+              "reps": "12/10",
+              "restSeconds": 120,
+              "isDropSet": true,
+              "notes": "12-12-10-10. Set cuối 1 lần drop set. 3 bài đầu max sức.",
+              "videoUrl": "https://www.youtube.com/watch?v=CAwf7n6Luuc"
+            },
+            {
+              "id": "ex_wide_lat_pulldown",
+              "name": "Wide Grip Lat Pulldown",
+              "muscleGroup": "Cơ lưng rộng",
+              "sets": 4,
+              "reps": "12/10",
+              "restSeconds": 120,
+              "isDropSet": true,
+              "notes": "12-12-10-10. Set cuối 2 lần drop set.",
+              "videoUrl": "https://www.youtube.com/watch?v=CAwf7n6Luuc"
+            },
+            {
+              "id": "ex_cable_row_neutral",
+              "name": "Standing Cable Row (Neutral Grip)",
+              "muscleGroup": "Lưng giữa",
+              "sets": 4,
+              "reps": "12/10",
+              "restSeconds": 120,
+              "isDropSet": true,
+              "notes": "12-12-10-10. Set cuối 3 lần drop set.",
+              "videoUrl": "https://www.youtube.com/watch?v=GZbfZ033f74"
+            },
+            {
+              "id": "ex_bent_over_row",
+              "name": "Bent Over Barbell Row",
+              "muscleGroup": "Lưng",
+              "sets": 3,
+              "reps": "15",
+              "restSeconds": 90,
+              "isFail": true,
+              "notes": "15-15-15-fail. Tạ vừa, set cuối khô người."
+            },
+            {
+              "id": "ex_incline_db_row",
+              "name": "Incline Dumbbell Row",
+              "muscleGroup": "Lưng",
+              "sets": 4,
+              "reps": "15",
+              "restSeconds": 90,
+              "isFail": true,
+              "notes": "15-15-15-fail. Tạ vừa, set cuối khô người."
+            },
+            {
+              "id": "ex_single_arm_lat_pulldown",
+              "name": "Single Arm Lat Pulldown (Neutral Grip)",
+              "muscleGroup": "Cơ lưng rộng",
+              "sets": 4,
+              "reps": "20",
+              "restSeconds": 75,
+              "notes": "Cầm tay bình thường, kéo xuống tay ngửa, giữ 2 giây.",
+              "videoUrl": "https://www.youtube.com/watch?v=CAwf7n6Luuc"
+            },
+            {
+              "id": "ex_incline_db_curl",
+              "name": "Incline Dumbbell Curl",
+              "muscleGroup": "Cơ nhị đầu",
+              "sets": 4,
+              "reps": "15/12",
+              "restSeconds": 60,
+              "notes": "Ghế dốc 65°.",
+              "videoUrl": "https://www.youtube.com/watch?v=soxrZlIl35U"
+            },
+            {
+              "id": "ex_preacher_curl",
+              "name": "Single Arm Dumbbell Preacher Curl",
+              "muscleGroup": "Cơ nhị đầu",
+              "sets": 4,
+              "reps": "10-12",
+              "restSeconds": 60,
+              "notes": "Ghế dốc 75°.",
+              "videoUrl": "https://www.youtube.com/watch?v=soxrZlIl35U"
+            }
+          ],
+          "description": "Buổi kéo — ưu tiên 3 bài đầu với tạ nặng nhất có thể."
+        },
+        {
+          "id": "w1d2",
+          "dayNumber": 2,
+          "name": "Ngực & Vai",
+          "muscleGroup": "Ngực · Vai",
+          "estimatedMinutes": 70,
+          "exercises": [
+            {
+              "id": "ex_machine_incline_press",
+              "name": "Machine Incline Barbell Press",
+              "muscleGroup": "Ngực trên",
+              "sets": 4,
+              "reps": "10/8",
+              "restSeconds": 120,
+              "isDropSet": true,
+              "notes": "10-10-8-8. Set cuối 2 lần drop set."
+            },
+            {
+              "id": "ex_machine_chest_press",
+              "name": "Machine Chest Press",
               "muscleGroup": "Ngực",
               "sets": 4,
-              "reps": "8-10",
+              "reps": "12/10",
               "restSeconds": 120,
-              "isDropSet": false,
-              "isFail": false,
-              "notes": "Kiểm soát pha hạ. Chạm ngực nhẹ.",
-              "tips": "Thu xương bả vai, chân đặt vững, cong lưng nhẹ.",
-              "videoUrl": "https://www.youtube.com/watch?v=rT7DgCr-3pg"
-            },
-            {
-              "id": "ex_incline_db",
-              "name": "Incline Dumbbell Press",
-              "muscleGroup": "Ngực trên",
-              "sets": 3,
-              "reps": "10-12",
-              "restSeconds": 90,
-              "notes": "Góc ghế 30–45°.",
-              "videoUrl": "https://www.youtube.com/watch?v=8iPEnn-ltC8"
-            },
-            {
-              "id": "ex_ohp",
-              "name": "Standing Overhead Press",
-              "muscleGroup": "Vai",
-              "sets": 3,
-              "reps": "8-10",
-              "restSeconds": 90,
-              "videoUrl": "https://www.youtube.com/watch?v=2yjwXTZQDDI"
-            },
-            {
-              "id": "ex_lateral_raise",
-              "name": "Dumbbell Lateral Raise",
-              "muscleGroup": "Vai giữa",
-              "sets": 3,
-              "reps": "12-15",
-              "restSeconds": 60,
               "isDropSet": true,
-              "notes": "Set cuối: drop set đến kiệt.",
-              "videoUrl": "https://www.youtube.com/watch?v=3VcKaXpzqRo"
-            },
-            {
-              "id": "ex_tricep_pushdown",
-              "name": "Cable Triceps Pushdown",
-              "muscleGroup": "Cơ ba đầu",
-              "sets": 3,
-              "reps": "12-15",
-              "restSeconds": 60,
-              "isFail": true,
-              "videoUrl": "https://www.youtube.com/watch?v=2-LAMcpzODU"
+              "notes": "12-12-10-10. Set cuối 2 lần drop set."
             },
             {
               "id": "ex_cable_fly",
               "name": "Cable Fly",
               "muscleGroup": "Ngực",
-              "sets": 3,
+              "sets": 4,
               "reps": "12-15",
-              "restSeconds": 60,
+              "restSeconds": 75,
+              "notes": "Bay ngang.",
               "videoUrl": "https://www.youtube.com/watch?v=Iwe6EpLv6lM"
-            }
-          ]
-        },
-        {
-          "id": "w1d2",
-          "dayNumber": 2,
-          "name": "Kéo Sức",
-          "muscleGroup": "Lưng · Cơ nhị đầu · Vai sau",
-          "estimatedMinutes": 60,
-          "exercises": [
-            {
-              "id": "ex_deadlift",
-              "name": "Conventional Deadlift",
-              "muscleGroup": "Lưng",
-              "sets": 3,
-              "reps": "5",
-              "restSeconds": 150,
-              "notes": "Khởi động kỹ. Siết core chắc.",
-              "videoUrl": "https://www.youtube.com/watch?v=op9kVnSso6Q"
             },
             {
-              "id": "ex_pullup",
-              "name": "Pull-Up",
-              "muscleGroup": "Cơ lưng rộng",
+              "id": "ex_standing_db_press",
+              "name": "Standing Dumbbell Shoulder Press",
+              "muscleGroup": "Vai",
               "sets": 4,
-              "reps": "6-10",
+              "reps": "12",
               "restSeconds": 90,
-              "notes": "Dùng hỗ trợ hoặc tạ thêm tùy khả năng.",
-              "videoUrl": "https://www.youtube.com/watch?v=eGo4IYlbE5g"
+              "videoUrl": "https://www.youtube.com/watch?v=8iPEnn-ltC8"
             },
             {
-              "id": "ex_barbell_row",
-              "name": "Bent-Over Barbell Row",
-              "muscleGroup": "Lưng",
+              "id": "ex_lateral_raise",
+              "name": "Dumbbell Lateral Raise",
+              "muscleGroup": "Vai giữa",
               "sets": 4,
-              "reps": "8-10",
-              "restSeconds": 90,
-              "videoUrl": "https://www.youtube.com/watch?v=FWJR5Ve8bnQ"
-            },
-            {
-              "id": "ex_face_pull",
-              "name": "Face Pull",
-              "muscleGroup": "Vai sau",
-              "sets": 3,
-              "reps": "15-20",
-              "restSeconds": 60,
-              "videoUrl": "https://www.youtube.com/watch?v=rep-aKOiNTY"
-            },
-            {
-              "id": "ex_barbell_curl",
-              "name": "Barbell Curl",
-              "muscleGroup": "Cơ nhị đầu",
-              "sets": 3,
-              "reps": "10-12",
-              "restSeconds": 60,
-              "videoUrl": "https://www.youtube.com/watch?v=kwG2ipFRgfo"
-            },
-            {
-              "id": "ex_hammer_curl",
-              "name": "Hammer Curl",
-              "muscleGroup": "Cơ nhị đầu · Cơ cẳng tay",
-              "sets": 3,
               "reps": "12-15",
               "restSeconds": 60,
               "isDropSet": true,
-              "videoUrl": "https://www.youtube.com/watch?v=zC3nLlEvin4"
+              "notes": "Set cuối 3 lần drop set.",
+              "videoUrl": "https://www.youtube.com/watch?v=3VcKaXpzqRo"
+            },
+            {
+              "id": "ex_incline_db_fly",
+              "name": "Incline Dumbbell Fly",
+              "muscleGroup": "Ngực trên",
+              "sets": 3,
+              "reps": "12-15",
+              "restSeconds": 75,
+              "notes": "Ghế dốc tùy theo chân máy.",
+              "videoUrl": "https://www.youtube.com/watch?v=Iwe6EpLv6lM"
+            },
+            {
+              "id": "ex_incline_reverse_fly",
+              "name": "Incline Dumbbell Reverse Fly",
+              "muscleGroup": "Vai sau",
+              "sets": 4,
+              "reps": "12",
+              "restSeconds": 60,
+              "notes": "Ghế dốc tùy theo chân máy."
+            },
+            {
+              "id": "ex_barbell_front_raise",
+              "name": "Barbell Front Raise",
+              "muscleGroup": "Vai trước",
+              "sets": 4,
+              "reps": "15",
+              "restSeconds": 60,
+              "isFail": true,
+              "notes": "15-15-15-fail."
             }
           ]
         },
         {
           "id": "w1d3",
           "dayNumber": 3,
-          "name": "Ngày Chân",
-          "muscleGroup": "Đùi trước · Đùi sau · Mông · Bắp chân",
-          "estimatedMinutes": 65,
+          "name": "Chân",
+          "muscleGroup": "Đùi trước · Đùi sau · Bắp chân",
+          "estimatedMinutes": 85,
           "exercises": [
             {
-              "id": "ex_squat",
-              "name": "Barbell Back Squat",
+              "id": "ex_belt_squat",
+              "name": "Belt Squat Machine",
               "muscleGroup": "Đùi trước",
-              "sets": 4,
-              "reps": "6-8",
+              "sets": 6,
+              "reps": "12/8",
               "restSeconds": 150,
-              "videoUrl": "https://www.youtube.com/watch?v=ultWZbUMPL8"
-            },
-            {
-              "id": "ex_rdl",
-              "name": "Romanian Deadlift",
-              "muscleGroup": "Đùi sau",
-              "sets": 3,
-              "reps": "8-10",
-              "restSeconds": 120,
-              "videoUrl": "https://www.youtube.com/watch?v=jEy_czb3RKA"
+              "isDropSet": true,
+              "notes": "12-12-10-10-8-8. Set cuối 3 lần drop set."
             },
             {
               "id": "ex_leg_press",
               "name": "Leg Press",
               "muscleGroup": "Đùi trước",
-              "sets": 3,
-              "reps": "10-12",
-              "restSeconds": 90,
+              "sets": 6,
+              "reps": "12/10",
+              "restSeconds": 120,
+              "isDropSet": true,
+              "notes": "12-12-10-10-10-10. Set cuối 3 lần drop set.",
               "videoUrl": "https://www.youtube.com/watch?v=IZxyjW7MPJQ"
             },
             {
-              "id": "ex_walking_lunge",
-              "name": "Walking Lunge",
-              "muscleGroup": "Mông · Đùi trước",
-              "sets": 3,
-              "reps": "10 each",
-              "restSeconds": 90,
-              "videoUrl": "https://www.youtube.com/watch?v=L8fvypPrzzs"
+              "id": "ex_smith_squat",
+              "name": "Smith Squat",
+              "muscleGroup": "Đùi trước",
+              "sets": 6,
+              "reps": "12/10",
+              "restSeconds": 120,
+              "isDropSet": true,
+              "notes": "12-12-12-10-10-10. Set cuối 3 lần drop set."
             },
             {
-              "id": "ex_leg_curl",
-              "name": "Lying Leg Curl",
-              "muscleGroup": "Đùi sau",
-              "sets": 3,
-              "reps": "12-15",
+              "id": "ex_leg_extension",
+              "name": "Leg Extension",
+              "muscleGroup": "Đùi trước",
+              "sets": 4,
+              "reps": "15",
               "restSeconds": 60,
-              "isFail": true,
-              "videoUrl": "https://www.youtube.com/watch?v=1Tq3QMpbTIg"
+              "videoUrl": "https://www.youtube.com/watch?v=YyvSfVjQeL0"
             },
             {
-              "id": "ex_calf_raise",
+              "id": "ex_standing_calf_raise",
               "name": "Standing Calf Raise",
               "muscleGroup": "Bắp chân",
               "sets": 4,
               "reps": "12-15",
-              "restSeconds": 60,
+              "restSeconds": 45,
               "videoUrl": "https://www.youtube.com/watch?v=-M4-G8p8fmc"
+            },
+            {
+              "id": "ex_seated_calf_raise",
+              "name": "Seated Calf Raise",
+              "muscleGroup": "Bắp chân",
+              "sets": 4,
+              "reps": "10-12",
+              "restSeconds": 45
             }
-          ]
+          ],
+          "description": "Buổi chân nặng — chuẩn bị khô người."
         },
         {
           "id": "w1d4",
           "dayNumber": 4,
-          "name": "Phần trên Phát triển",
+          "name": "Upper",
           "muscleGroup": "Ngực · Lưng · Cơ tay",
-          "estimatedMinutes": 50,
+          "estimatedMinutes": 60,
           "exercises": [
             {
-              "id": "ex_db_press",
-              "name": "Flat Dumbbell Press",
-              "muscleGroup": "Ngực",
-              "sets": 3,
-              "reps": "10-12",
-              "restSeconds": 90,
-              "videoUrl": "https://www.youtube.com/watch?v=VmB1G1K7v94"
+              "id": "ex_machine_incline_press",
+              "name": "Machine Incline Barbell Press",
+              "muscleGroup": "Ngực trên",
+              "sets": 4,
+              "reps": "10/8",
+              "restSeconds": 120,
+              "isDropSet": true,
+              "notes": "10-10-8-8. Set cuối 1 lần drop set."
             },
             {
-              "id": "ex_lat_pulldown",
-              "name": "Lat Pulldown",
+              "id": "ex_dips",
+              "name": "Dips",
+              "muscleGroup": "Ngực · Cơ ba đầu",
+              "sets": 4,
+              "reps": "fail",
+              "restSeconds": 90,
+              "isFail": true,
+              "videoUrl": "https://www.youtube.com/watch?v=2z8JmcrW-As"
+            },
+            {
+              "id": "ex_machine_lateral_raise",
+              "name": "Machine Lateral Raise",
+              "muscleGroup": "Vai giữa",
+              "sets": 3,
+              "reps": "15",
+              "restSeconds": 60
+            },
+            {
+              "id": "ex_pullup",
+              "name": "Pull-Up",
               "muscleGroup": "Cơ lưng rộng",
-              "sets": 3,
-              "reps": "10-12",
+              "sets": 4,
+              "reps": "fail",
               "restSeconds": 90,
-              "videoUrl": "https://www.youtube.com/watch?v=CAwf7n6Luuc"
+              "isFail": true,
+              "videoUrl": "https://www.youtube.com/watch?v=eGo4IYlbE5g"
             },
             {
-              "id": "ex_seated_row",
-              "name": "Seated Cable Row",
+              "id": "ex_machine_row",
+              "name": "Machine Row",
               "muscleGroup": "Lưng",
-              "sets": 3,
-              "reps": "10-12",
+              "sets": 4,
+              "reps": "15",
               "restSeconds": 90,
-              "videoUrl": "https://www.youtube.com/watch?v=GZbfZ033f74"
+              "isFail": true,
+              "notes": "15-15-15-fail."
             },
             {
-              "id": "ex_arnold_press",
-              "name": "Arnold Press",
-              "muscleGroup": "Vai",
-              "sets": 3,
-              "reps": "10-12",
-              "restSeconds": 75,
-              "videoUrl": "https://www.youtube.com/watch?v=6Z15_WdXmVw"
-            },
-            {
-              "id": "ex_skull_crusher",
-              "name": "Skull Crusher",
+              "id": "ex_tricep_pushdown",
+              "name": "Triceps Pushdown",
               "muscleGroup": "Cơ ba đầu",
               "sets": 3,
-              "reps": "10-12",
+              "reps": "fail",
               "restSeconds": 60,
-              "videoUrl": "https://www.youtube.com/watch?v=d_KjpgUtR6E"
+              "isFail": true,
+              "notes": "Superset với Barbell Curl.",
+              "videoUrl": "https://www.youtube.com/watch?v=2-LAMcpzODU"
             },
             {
-              "id": "ex_incline_curl",
-              "name": "Incline Dumbbell Curl",
+              "id": "ex_barbell_curl",
+              "name": "Barbell Curl",
               "muscleGroup": "Cơ nhị đầu",
               "sets": 3,
-              "reps": "12-15",
+              "reps": "fail",
               "restSeconds": 60,
+              "isFail": true,
+              "notes": "Superset với Triceps Pushdown.",
+              "videoUrl": "https://www.youtube.com/watch?v=kwG2ipFRgfo"
+            }
+          ],
+          "description": "Có thể đổi Upper/Lower lên đầu tuần."
+        },
+        {
+          "id": "w1d5",
+          "dayNumber": 5,
+          "name": "Lower",
+          "muscleGroup": "Đùi sau · Mông · Bắp chân",
+          "estimatedMinutes": 65,
+          "exercises": [
+            {
+              "id": "ex_seated_leg_curl",
+              "name": "Seated Leg Curl",
+              "muscleGroup": "Đùi sau",
+              "sets": 6,
+              "reps": "12",
+              "restSeconds": 90,
               "isDropSet": true,
-              "videoUrl": "https://www.youtube.com/watch?v=soxrZlIl35U"
+              "notes": "Set cuối 1 lần drop set.",
+              "videoUrl": "https://www.youtube.com/watch?v=1Tq3QMpbTIg"
+            },
+            {
+              "id": "ex_smith_lunge",
+              "name": "Smith Machine Lunge",
+              "muscleGroup": "Mông · Đùi trước",
+              "sets": 4,
+              "reps": "fail",
+              "restSeconds": 90,
+              "isFail": true
+            },
+            {
+              "id": "ex_deadlift",
+              "name": "Deadlift",
+              "muscleGroup": "Lưng · Đùi sau",
+              "sets": 6,
+              "reps": "12",
+              "restSeconds": 120,
+              "videoUrl": "https://www.youtube.com/watch?v=op9kVnSso6Q"
+            },
+            {
+              "id": "ex_one_leg_extension",
+              "name": "One Leg Extension",
+              "muscleGroup": "Đùi trước",
+              "sets": 4,
+              "reps": "15",
+              "restSeconds": 60,
+              "notes": "Gối hướng ra ngoài 45°, đá từng chân.",
+              "videoUrl": "https://www.youtube.com/watch?v=YyvSfVjQeL0"
+            },
+            {
+              "id": "ex_hip_abduction",
+              "name": "Hip Abduction",
+              "muscleGroup": "Mông",
+              "sets": 4,
+              "reps": "fail",
+              "restSeconds": 60,
+              "isFail": true
+            },
+            {
+              "id": "ex_standing_calf_raise",
+              "name": "Standing Calf Raise",
+              "muscleGroup": "Bắp chân",
+              "sets": 4,
+              "reps": "12-15",
+              "restSeconds": 45,
+              "videoUrl": "https://www.youtube.com/watch?v=-M4-G8p8fmc"
             }
           ]
         }
@@ -280,44 +408,16 @@
     },
     {
       "weekNumber": 2,
-      "title": "Tiến triển",
-      "focus": "Tăng tạ. Giữ kỹ thuật chắc. Đẩy set làm việc mạnh hơn.",
+      "title": "Lịch 2 — Vai/Lưng",
+      "focus": "Tập trung vai và lưng với volume cao. Lower giữ nguyên như tuần 1.",
       "days": [
         {
           "id": "w2d1",
           "dayNumber": 1,
-          "name": "Đẩy Sức",
-          "muscleGroup": "Ngực · Vai · Cơ ba đầu",
-          "estimatedMinutes": 58,
+          "name": "Vai",
+          "muscleGroup": "Vai · Vai sau",
+          "estimatedMinutes": 65,
           "exercises": [
-            {
-              "id": "ex_bench_press",
-              "name": "Barbell Bench Press",
-              "muscleGroup": "Ngực",
-              "sets": 4,
-              "reps": "6-8",
-              "restSeconds": 120,
-              "notes": "Mục tiêu +2.5kg so với tuần 1.",
-              "videoUrl": "https://www.youtube.com/watch?v=rT7DgCr-3pg"
-            },
-            {
-              "id": "ex_incline_db",
-              "name": "Incline Dumbbell Press",
-              "muscleGroup": "Ngực trên",
-              "sets": 4,
-              "reps": "8-10",
-              "restSeconds": 90,
-              "videoUrl": "https://www.youtube.com/watch?v=8iPEnn-ltC8"
-            },
-            {
-              "id": "ex_ohp",
-              "name": "Standing Overhead Press",
-              "muscleGroup": "Vai",
-              "sets": 4,
-              "reps": "6-8",
-              "restSeconds": 100,
-              "videoUrl": "https://www.youtube.com/watch?v=2yjwXTZQDDI"
-            },
             {
               "id": "ex_lateral_raise",
               "name": "Dumbbell Lateral Raise",
@@ -326,152 +426,209 @@
               "reps": "12-15",
               "restSeconds": 60,
               "isDropSet": true,
+              "notes": "Set cuối 3 lần drop set.",
               "videoUrl": "https://www.youtube.com/watch?v=3VcKaXpzqRo"
             },
             {
-              "id": "ex_tricep_pushdown",
-              "name": "Cable Triceps Pushdown",
-              "muscleGroup": "Cơ ba đầu",
-              "sets": 3,
-              "reps": "10-12",
-              "restSeconds": 60,
-              "isFail": true,
-              "videoUrl": "https://www.youtube.com/watch?v=2-LAMcpzODU"
+              "id": "ex_seated_db_press",
+              "name": "Seated Dumbbell Shoulder Press",
+              "muscleGroup": "Vai",
+              "sets": 4,
+              "reps": "12/8",
+              "restSeconds": 90,
+              "notes": "12, 10, 8, 12 reps."
             },
             {
-              "id": "ex_dips",
-              "name": "Weighted Dips",
-              "muscleGroup": "Ngực · Cơ ba đầu",
-              "sets": 3,
-              "reps": "8-12",
+              "id": "ex_standing_bb_machine_press",
+              "name": "Standing Barbell Machine Press",
+              "muscleGroup": "Vai",
+              "sets": 4,
+              "reps": "10-12",
               "restSeconds": 90,
-              "videoUrl": "https://www.youtube.com/watch?v=2z8JmcrW-As"
+              "isDropSet": true,
+              "notes": "Set cuối 3 lần drop set."
+            },
+            {
+              "id": "ex_upright_row",
+              "name": "Barbell Upright Row",
+              "muscleGroup": "Vai",
+              "sets": 4,
+              "reps": "10-12",
+              "restSeconds": 75
+            },
+            {
+              "id": "ex_y_raise",
+              "name": "High Incline Dumbbell Y Raise",
+              "muscleGroup": "Vai sau",
+              "sets": 3,
+              "reps": "12-15",
+              "restSeconds": 60
+            },
+            {
+              "id": "ex_db_reverse_fly",
+              "name": "Dumbbell Reverse Fly",
+              "muscleGroup": "Vai sau",
+              "sets": 4,
+              "reps": "12-15",
+              "restSeconds": 60
+            },
+            {
+              "id": "ex_db_shrugs",
+              "name": "Dumbbell Shrugs",
+              "muscleGroup": "Cơ thang",
+              "sets": 3,
+              "reps": "12",
+              "restSeconds": 60,
+              "notes": "Superset với Rope Face Pulls."
+            },
+            {
+              "id": "ex_face_pull",
+              "name": "Rope Face Pull",
+              "muscleGroup": "Vai sau",
+              "sets": 3,
+              "reps": "12",
+              "restSeconds": 60,
+              "notes": "Superset với Dumbbell Shrugs.",
+              "videoUrl": "https://www.youtube.com/watch?v=rep-aKOiNTY"
             }
           ]
         },
         {
           "id": "w2d2",
           "dayNumber": 2,
-          "name": "Kéo Sức",
-          "muscleGroup": "Lưng · Cơ nhị đầu · Vai sau",
-          "estimatedMinutes": 62,
+          "name": "Lưng",
+          "muscleGroup": "Lưng · Cơ lưng rộng",
+          "estimatedMinutes": 75,
           "exercises": [
             {
-              "id": "ex_deadlift",
-              "name": "Conventional Deadlift",
-              "muscleGroup": "Lưng",
-              "sets": 4,
-              "reps": "4-5",
-              "restSeconds": 180,
-              "videoUrl": "https://www.youtube.com/watch?v=op9kVnSso6Q"
-            },
-            {
-              "id": "ex_pullup",
-              "name": "Pull-Up",
+              "id": "ex_neutral_lat_pulldown",
+              "name": "Neutral Grip Lat Pulldown",
               "muscleGroup": "Cơ lưng rộng",
-              "sets": 4,
-              "reps": "8-12",
-              "restSeconds": 90,
-              "videoUrl": "https://www.youtube.com/watch?v=eGo4IYlbE5g"
-            },
-            {
-              "id": "ex_barbell_row",
-              "name": "Bent-Over Barbell Row",
-              "muscleGroup": "Lưng",
-              "sets": 4,
-              "reps": "8",
-              "restSeconds": 90,
-              "videoUrl": "https://www.youtube.com/watch?v=FWJR5Ve8bnQ"
+              "sets": 6,
+              "reps": "10-12",
+              "restSeconds": 120,
+              "isDropSet": true,
+              "notes": "Set cuối 3 lần drop set.",
+              "videoUrl": "https://www.youtube.com/watch?v=CAwf7n6Luuc"
             },
             {
               "id": "ex_chest_supported_row",
-              "name": "Chest-Supported Row",
+              "name": "Chest Supported Row",
               "muscleGroup": "Lưng",
-              "sets": 3,
+              "sets": 4,
               "reps": "10-12",
-              "restSeconds": 75
+              "restSeconds": 90,
+              "isDropSet": true,
+              "notes": "Set cuối 1 lần drop set."
             },
             {
-              "id": "ex_face_pull",
-              "name": "Face Pull",
-              "muscleGroup": "Vai sau",
-              "sets": 3,
-              "reps": "15-20",
-              "restSeconds": 60,
-              "videoUrl": "https://www.youtube.com/watch?v=rep-aKOiNTY"
+              "id": "ex_wide_lat_pulldown",
+              "name": "Wide Grip Lat Pulldown",
+              "muscleGroup": "Cơ lưng rộng",
+              "sets": 6,
+              "reps": "10-12",
+              "restSeconds": 120,
+              "isDropSet": true,
+              "notes": "Set cuối 3 lần drop set.",
+              "videoUrl": "https://www.youtube.com/watch?v=CAwf7n6Luuc"
             },
             {
-              "id": "ex_barbell_curl",
-              "name": "Barbell Curl",
-              "muscleGroup": "Cơ nhị đầu",
+              "id": "ex_single_arm_cable_pulldown",
+              "name": "Single Arm Cable Pulldown",
+              "muscleGroup": "Cơ lưng rộng",
+              "sets": 6,
+              "reps": "10-12",
+              "restSeconds": 75,
+              "videoUrl": "https://www.youtube.com/watch?v=CAwf7n6Luuc"
+            },
+            {
+              "id": "ex_wide_seated_cable_row",
+              "name": "Wide Grip Seated Cable Row",
+              "muscleGroup": "Lưng",
+              "sets": 4,
+              "reps": "10-12",
+              "restSeconds": 90,
+              "videoUrl": "https://www.youtube.com/watch?v=GZbfZ033f74"
+            },
+            {
+              "id": "ex_hanging_pullup",
+              "name": "Hanging Pull-Up Hold",
+              "muscleGroup": "Cơ lưng rộng",
               "sets": 3,
-              "reps": "8-10",
-              "restSeconds": 60,
-              "isFail": true,
-              "videoUrl": "https://www.youtube.com/watch?v=kwG2ipFRgfo"
+              "reps": "60s",
+              "restSeconds": 90,
+              "notes": "Treo không kéo lên, giữ 60 giây.",
+              "videoUrl": "https://www.youtube.com/watch?v=eGo4IYlbE5g"
             }
           ]
         },
         {
           "id": "w2d3",
           "dayNumber": 3,
-          "name": "Ngày Chân",
-          "muscleGroup": "Đùi trước · Đùi sau · Mông · Bắp chân",
-          "estimatedMinutes": 70,
+          "name": "Chân",
+          "muscleGroup": "Đùi trước · Đùi sau · Bắp chân",
+          "estimatedMinutes": 75,
           "exercises": [
             {
-              "id": "ex_squat",
-              "name": "Barbell Back Squat",
+              "id": "ex_leg_extension",
+              "name": "Leg Extension",
               "muscleGroup": "Đùi trước",
               "sets": 5,
-              "reps": "5",
-              "restSeconds": 180,
-              "videoUrl": "https://www.youtube.com/watch?v=ultWZbUMPL8"
+              "reps": "12-15",
+              "restSeconds": 75,
+              "isDropSet": true,
+              "notes": "Set cuối 3 lần drop set.",
+              "videoUrl": "https://www.youtube.com/watch?v=YyvSfVjQeL0"
             },
             {
-              "id": "ex_rdl",
-              "name": "Romanian Deadlift",
-              "muscleGroup": "Đùi sau",
+              "id": "ex_db_lunge",
+              "name": "Dumbbell Lunge",
+              "muscleGroup": "Mông · Đùi trước",
               "sets": 4,
-              "reps": "8",
-              "restSeconds": 120,
-              "videoUrl": "https://www.youtube.com/watch?v=jEy_czb3RKA"
-            },
-            {
-              "id": "ex_bulgarian",
-              "name": "Bulgarian Split Squat",
-              "muscleGroup": "Đùi trước · Mông",
-              "sets": 3,
-              "reps": "8 each",
-              "restSeconds": 90
+              "reps": "8-10",
+              "restSeconds": 90,
+              "isDropSet": true,
+              "notes": "Set cuối 1 lần drop set. Không tạ, mỗi chân 20 bước."
             },
             {
               "id": "ex_leg_press",
               "name": "Leg Press",
               "muscleGroup": "Đùi trước",
-              "sets": 3,
-              "reps": "12-15",
-              "restSeconds": 90,
+              "sets": 6,
+              "reps": "10-12",
+              "restSeconds": 120,
               "isDropSet": true,
+              "notes": "Set cuối 3 lần drop set.",
               "videoUrl": "https://www.youtube.com/watch?v=IZxyjW7MPJQ"
             },
             {
-              "id": "ex_leg_curl",
-              "name": "Lying Leg Curl",
+              "id": "ex_belt_squat",
+              "name": "Belt Squat",
+              "muscleGroup": "Đùi trước",
+              "sets": 4,
+              "reps": "12/8",
+              "restSeconds": 120,
+              "isDropSet": true,
+              "notes": "12-10-10-8. Set cuối 3 lần drop set."
+            },
+            {
+              "id": "ex_seated_leg_curl",
+              "name": "Seated Leg Curl",
               "muscleGroup": "Đùi sau",
-              "sets": 3,
-              "reps": "12",
-              "restSeconds": 60,
+              "sets": 4,
+              "reps": "12-15",
+              "restSeconds": 75,
+              "isDropSet": true,
+              "notes": "Set cuối 2 lần drop set.",
               "videoUrl": "https://www.youtube.com/watch?v=1Tq3QMpbTIg"
             },
             {
-              "id": "ex_calf_raise",
+              "id": "ex_standing_calf_raise",
               "name": "Standing Calf Raise",
               "muscleGroup": "Bắp chân",
               "sets": 4,
               "reps": "10-12",
-              "restSeconds": 60,
-              "isFail": true,
+              "restSeconds": 45,
               "videoUrl": "https://www.youtube.com/watch?v=-M4-G8p8fmc"
             }
           ]
@@ -479,330 +636,567 @@
         {
           "id": "w2d4",
           "dayNumber": 4,
-          "name": "Phần trên Phát triển",
-          "muscleGroup": "Ngực · Lưng · Cơ tay",
-          "estimatedMinutes": 55,
+          "name": "Upper",
+          "muscleGroup": "Ngực · Vai · Cơ tay",
+          "estimatedMinutes": 70,
           "exercises": [
             {
-              "id": "ex_db_press",
-              "name": "Flat Dumbbell Press",
+              "id": "ex_smith_incline_press",
+              "name": "Slight Incline Smith Machine Press",
+              "muscleGroup": "Ngực trên",
+              "sets": 4,
+              "reps": "10/8",
+              "restSeconds": 120,
+              "isDropSet": true,
+              "notes": "Ghế dốc 30°. 10,10,8,8. Set cuối 2 lần drop set."
+            },
+            {
+              "id": "ex_incline_db_press",
+              "name": "Incline Dumbbell Press",
+              "muscleGroup": "Ngực trên",
+              "sets": 4,
+              "reps": "10-12",
+              "restSeconds": 90,
+              "notes": "Ghế dốc 30°.",
+              "videoUrl": "https://www.youtube.com/watch?v=8iPEnn-ltC8"
+            },
+            {
+              "id": "ex_flat_machine_press",
+              "name": "Flat Machine Press",
               "muscleGroup": "Ngực",
               "sets": 4,
-              "reps": "8-10",
+              "reps": "10-12",
               "restSeconds": 90,
-              "videoUrl": "https://www.youtube.com/watch?v=VmB1G1K7v94"
+              "isDropSet": true,
+              "notes": "Set cuối 1 lần drop set."
             },
             {
-              "id": "ex_lat_pulldown",
-              "name": "Lat Pulldown",
-              "muscleGroup": "Cơ lưng rộng",
+              "id": "ex_low_high_cable_fly",
+              "name": "Seated Low To High Cable Fly",
+              "muscleGroup": "Ngực trên",
               "sets": 4,
-              "reps": "8-10",
-              "restSeconds": 90,
-              "videoUrl": "https://www.youtube.com/watch?v=CAwf7n6Luuc"
-            },
-            {
-              "id": "ex_seated_row",
-              "name": "Seated Cable Row",
-              "muscleGroup": "Lưng",
-              "sets": 3,
-              "reps": "10",
+              "reps": "10-12",
               "restSeconds": 75,
-              "videoUrl": "https://www.youtube.com/watch?v=GZbfZ033f74"
+              "videoUrl": "https://www.youtube.com/watch?v=Iwe6EpLv6lM"
             },
             {
-              "id": "ex_lateral_raise",
-              "name": "Dumbbell Lateral Raise",
+              "id": "ex_machine_front_raise",
+              "name": "Machine Front Raise",
+              "muscleGroup": "Vai trước",
+              "sets": 3,
+              "reps": "15",
+              "restSeconds": 60,
+              "notes": "Superset từng tay với Machine Lateral Raise. Set cuối 3 lần drop set."
+            },
+            {
+              "id": "ex_machine_lateral_raise",
+              "name": "Machine Lateral Raise",
               "muscleGroup": "Vai giữa",
               "sets": 3,
               "reps": "15",
               "restSeconds": 60,
-              "isDropSet": true,
-              "videoUrl": "https://www.youtube.com/watch?v=3VcKaXpzqRo"
+              "notes": "Superset từng tay với Machine Front Raise."
             },
             {
-              "id": "ex_skull_crusher",
-              "name": "Skull Crusher",
-              "muscleGroup": "Cơ ba đầu",
-              "sets": 3,
-              "reps": "10",
-              "restSeconds": 60,
-              "videoUrl": "https://www.youtube.com/watch?v=d_KjpgUtR6E"
+              "id": "ex_machine_shoulder_press",
+              "name": "Machine Shoulder Press",
+              "muscleGroup": "Vai",
+              "sets": 4,
+              "reps": "10-12",
+              "restSeconds": 90
             },
             {
-              "id": "ex_incline_curl",
-              "name": "Incline Dumbbell Curl",
+              "id": "ex_rope_hammer_curl",
+              "name": "Rope Hammer Curl",
               "muscleGroup": "Cơ nhị đầu",
-              "sets": 3,
-              "reps": "12",
+              "sets": 4,
+              "reps": "10-12",
               "restSeconds": 60,
-              "videoUrl": "https://www.youtube.com/watch?v=soxrZlIl35U"
+              "notes": "Superset với V-Bar Cable Pushdown."
+            },
+            {
+              "id": "ex_vbar_pushdown",
+              "name": "V-Bar Cable Pushdown",
+              "muscleGroup": "Cơ ba đầu",
+              "sets": 4,
+              "reps": "10-12",
+              "restSeconds": 60,
+              "notes": "Superset với Rope Hammer Curl.",
+              "videoUrl": "https://www.youtube.com/watch?v=2-LAMcpzODU"
             }
           ]
+        },
+        {
+          "id": "w2d5",
+          "dayNumber": 5,
+          "name": "Lower",
+          "muscleGroup": "Đùi sau · Mông · Bắp chân",
+          "estimatedMinutes": 65,
+          "exercises": [
+            {
+              "id": "ex_seated_leg_curl",
+              "name": "Seated Leg Curl",
+              "muscleGroup": "Đùi sau",
+              "sets": 6,
+              "reps": "12",
+              "restSeconds": 90,
+              "isDropSet": true,
+              "notes": "Set cuối 1 lần drop set.",
+              "videoUrl": "https://www.youtube.com/watch?v=1Tq3QMpbTIg"
+            },
+            {
+              "id": "ex_smith_lunge",
+              "name": "Smith Machine Lunge",
+              "muscleGroup": "Mông · Đùi trước",
+              "sets": 4,
+              "reps": "fail",
+              "restSeconds": 90,
+              "isFail": true
+            },
+            {
+              "id": "ex_deadlift",
+              "name": "Deadlift",
+              "muscleGroup": "Lưng · Đùi sau",
+              "sets": 6,
+              "reps": "12",
+              "restSeconds": 120,
+              "videoUrl": "https://www.youtube.com/watch?v=op9kVnSso6Q"
+            },
+            {
+              "id": "ex_one_leg_extension",
+              "name": "One Leg Extension",
+              "muscleGroup": "Đùi trước",
+              "sets": 4,
+              "reps": "15",
+              "restSeconds": 60,
+              "notes": "Gối hướng ra ngoài 45°, đá từng chân.",
+              "videoUrl": "https://www.youtube.com/watch?v=YyvSfVjQeL0"
+            },
+            {
+              "id": "ex_hip_abduction",
+              "name": "Hip Abduction",
+              "muscleGroup": "Mông",
+              "sets": 4,
+              "reps": "fail",
+              "restSeconds": 60,
+              "isFail": true
+            },
+            {
+              "id": "ex_standing_calf_raise",
+              "name": "Standing Calf Raise",
+              "muscleGroup": "Bắp chân",
+              "sets": 4,
+              "reps": "12-15",
+              "restSeconds": 45,
+              "videoUrl": "https://www.youtube.com/watch?v=-M4-G8p8fmc"
+            }
+          ],
+          "description": "Lower lần 2 — giữ nguyên cấu trúc tuần 1."
         }
       ]
     },
     {
       "weekNumber": 3,
-      "title": "Đỉnh Volume",
-      "focus": "Tuần volume cao nhất. Chất lượng hơn tạ ego.",
+      "title": "Lịch 3 — Tay/Push",
+      "focus": "Buổi tay toàn supersets. Chân và lưng volume cao. Push kết hợp ngực-vai-tay sau.",
       "days": [
         {
           "id": "w3d1",
           "dayNumber": 1,
-          "name": "Đẩy Sức",
-          "muscleGroup": "Ngực · Vai · Cơ ba đầu",
+          "name": "Tay",
+          "muscleGroup": "Cơ nhị đầu · Cơ ba đầu",
           "estimatedMinutes": 60,
           "exercises": [
             {
-              "id": "ex_bench_press",
-              "name": "Barbell Bench Press",
-              "muscleGroup": "Ngực",
-              "sets": 5,
-              "reps": "5-6",
-              "restSeconds": 150,
-              "videoUrl": "https://www.youtube.com/watch?v=rT7DgCr-3pg"
-            },
-            {
-              "id": "ex_incline_db",
-              "name": "Incline Dumbbell Press",
-              "muscleGroup": "Ngực trên",
+              "id": "ex_barbell_curl",
+              "name": "Barbell Curl",
+              "muscleGroup": "Cơ nhị đầu",
               "sets": 4,
-              "reps": "8-10",
-              "restSeconds": 90,
-              "videoUrl": "https://www.youtube.com/watch?v=8iPEnn-ltC8"
+              "reps": "10-12",
+              "restSeconds": 60,
+              "isDropSet": true,
+              "notes": "Superset với Rope Pushdown. Drop set 1 lần cả 2 bài.",
+              "videoUrl": "https://www.youtube.com/watch?v=kwG2ipFRgfo"
             },
             {
-              "id": "ex_ohp",
-              "name": "Standing Overhead Press",
-              "muscleGroup": "Vai",
-              "sets": 4,
-              "reps": "6-8",
-              "restSeconds": 100,
-              "videoUrl": "https://www.youtube.com/watch?v=2yjwXTZQDDI"
-            },
-            {
-              "id": "ex_lateral_raise",
-              "name": "Dumbbell Lateral Raise",
-              "muscleGroup": "Vai giữa",
+              "id": "ex_rope_pushdown",
+              "name": "Rope Triceps Pushdown",
+              "muscleGroup": "Cơ ba đầu",
               "sets": 4,
               "reps": "12-15",
               "restSeconds": 60,
               "isDropSet": true,
-              "videoUrl": "https://www.youtube.com/watch?v=3VcKaXpzqRo"
+              "notes": "Superset với Barbell Curl.",
+              "videoUrl": "https://www.youtube.com/watch?v=2-LAMcpzODU"
             },
             {
-              "id": "ex_overhead_ext",
-              "name": "Overhead Triceps Extension",
+              "id": "ex_incline_db_curl",
+              "name": "Incline Dumbbell Curl",
+              "muscleGroup": "Cơ nhị đầu",
+              "sets": 4,
+              "reps": "10-12",
+              "restSeconds": 60,
+              "isDropSet": true,
+              "notes": "Superset với Seated Cable Overhead Tricep Extension.",
+              "videoUrl": "https://www.youtube.com/watch?v=soxrZlIl35U"
+            },
+            {
+              "id": "ex_oh_tricep_ext",
+              "name": "Seated Cable Overhead Tricep Extension",
               "muscleGroup": "Cơ ba đầu",
-              "sets": 3,
-              "reps": "12",
+              "sets": 4,
+              "reps": "10-12",
               "restSeconds": 60,
-              "isFail": true
+              "isDropSet": true,
+              "notes": "Superset với Incline Dumbbell Curl."
             },
             {
-              "id": "ex_cable_fly",
-              "name": "Cable Fly",
-              "muscleGroup": "Ngực",
-              "sets": 3,
-              "reps": "15",
+              "id": "ex_dips",
+              "name": "Dips",
+              "muscleGroup": "Cơ ba đầu",
+              "sets": 4,
+              "reps": "10-12",
+              "restSeconds": 75,
+              "notes": "Superset với Slight Incline EZ Bar Skull Crusher.",
+              "videoUrl": "https://www.youtube.com/watch?v=2z8JmcrW-As"
+            },
+            {
+              "id": "ex_skull_crusher",
+              "name": "Slight Incline EZ Bar Skull Crusher",
+              "muscleGroup": "Cơ ba đầu",
+              "sets": 4,
+              "reps": "10-12",
+              "restSeconds": 75,
+              "notes": "Superset với Dips.",
+              "videoUrl": "https://www.youtube.com/watch?v=d_KjpgUtR6E"
+            },
+            {
+              "id": "ex_alt_hammer_curl",
+              "name": "Alternating Dumbbell Hammer Curl",
+              "muscleGroup": "Cơ nhị đầu",
+              "sets": 4,
+              "reps": "10-12",
               "restSeconds": 60,
-              "videoUrl": "https://www.youtube.com/watch?v=Iwe6EpLv6lM"
+              "isDropSet": true,
+              "notes": "Superset với Single Arm Across Body Tricep Extension."
+            },
+            {
+              "id": "ex_across_body_tricep",
+              "name": "Single Arm Across Body Tricep Extension",
+              "muscleGroup": "Cơ ba đầu",
+              "sets": 4,
+              "reps": "10-12",
+              "restSeconds": 60,
+              "isDropSet": true,
+              "notes": "Superset với Alternating Hammer Curl."
             }
           ]
         },
         {
           "id": "w3d2",
           "dayNumber": 2,
-          "name": "Kéo Sức",
-          "muscleGroup": "Lưng · Cơ nhị đầu · Vai sau",
-          "estimatedMinutes": 65,
-          "exercises": [
-            {
-              "id": "ex_deadlift",
-              "name": "Conventional Deadlift",
-              "muscleGroup": "Lưng",
-              "sets": 4,
-              "reps": "3-5",
-              "restSeconds": 180,
-              "videoUrl": "https://www.youtube.com/watch?v=op9kVnSso6Q"
-            },
-            {
-              "id": "ex_pullup",
-              "name": "Pull-Up",
-              "muscleGroup": "Cơ lưng rộng",
-              "sets": 4,
-              "reps": "AMRAP",
-              "restSeconds": 90,
-              "notes": "Tối đa số rep chất lượng có thể.",
-              "videoUrl": "https://www.youtube.com/watch?v=eGo4IYlbE5g"
-            },
-            {
-              "id": "ex_barbell_row",
-              "name": "Bent-Over Barbell Row",
-              "muscleGroup": "Lưng",
-              "sets": 4,
-              "reps": "8",
-              "restSeconds": 90,
-              "videoUrl": "https://www.youtube.com/watch?v=FWJR5Ve8bnQ"
-            },
-            {
-              "id": "ex_single_arm_row",
-              "name": "Single-Arm Dumbbell Row",
-              "muscleGroup": "Cơ lưng rộng",
-              "sets": 3,
-              "reps": "10 each",
-              "restSeconds": 75
-            },
-            {
-              "id": "ex_face_pull",
-              "name": "Face Pull",
-              "muscleGroup": "Vai sau",
-              "sets": 4,
-              "reps": "15-20",
-              "restSeconds": 60,
-              "videoUrl": "https://www.youtube.com/watch?v=rep-aKOiNTY"
-            },
-            {
-              "id": "ex_hammer_curl",
-              "name": "Hammer Curl",
-              "muscleGroup": "Cơ nhị đầu · Cơ cẳng tay",
-              "sets": 3,
-              "reps": "12",
-              "restSeconds": 60,
-              "isDropSet": true,
-              "videoUrl": "https://www.youtube.com/watch?v=zC3nLlEvin4"
-            }
-          ]
-        },
-        {
-          "id": "w3d3",
-          "dayNumber": 3,
-          "name": "Ngày Chân",
-          "muscleGroup": "Đùi trước · Đùi sau · Mông · Bắp chân",
+          "name": "Chân",
+          "muscleGroup": "Đùi trước · Đùi sau · Bắp chân",
           "estimatedMinutes": 70,
           "exercises": [
             {
-              "id": "ex_squat",
-              "name": "Barbell Back Squat",
-              "muscleGroup": "Đùi trước",
-              "sets": 5,
-              "reps": "5",
-              "restSeconds": 180,
-              "videoUrl": "https://www.youtube.com/watch?v=ultWZbUMPL8"
-            },
-            {
-              "id": "ex_rdl",
-              "name": "Romanian Deadlift",
+              "id": "ex_seated_leg_curl",
+              "name": "Seated Leg Curl",
               "muscleGroup": "Đùi sau",
               "sets": 4,
-              "reps": "8",
+              "reps": "12-15",
+              "restSeconds": 75,
+              "isDropSet": true,
+              "notes": "Superset với Good Morning. Set cuối 3 lần drop set.",
+              "videoUrl": "https://www.youtube.com/watch?v=1Tq3QMpbTIg"
+            },
+            {
+              "id": "ex_good_morning",
+              "name": "Good Morning",
+              "muscleGroup": "Đùi sau · Lưng",
+              "sets": 4,
+              "reps": "fail",
+              "restSeconds": 90,
+              "isFail": true,
+              "notes": "Superset với Seated Leg Curl. Set cuối >40 reps."
+            },
+            {
+              "id": "ex_smith_squat",
+              "name": "Smith Machine Squat",
+              "muscleGroup": "Đùi trước",
+              "sets": 4,
+              "reps": "10-12",
               "restSeconds": 120,
-              "videoUrl": "https://www.youtube.com/watch?v=jEy_czb3RKA"
+              "isDropSet": true,
+              "notes": "Set cuối 1 lần drop set + lunges không tạ đến fail."
             },
             {
               "id": "ex_leg_press",
               "name": "Leg Press",
               "muscleGroup": "Đùi trước",
               "sets": 4,
-              "reps": "10-12",
-              "restSeconds": 90,
+              "reps": "10",
+              "restSeconds": 120,
+              "isDropSet": true,
+              "notes": "Set cuối 2 lần drop set.",
               "videoUrl": "https://www.youtube.com/watch?v=IZxyjW7MPJQ"
             },
             {
-              "id": "ex_walking_lunge",
-              "name": "Walking Lunge",
-              "muscleGroup": "Mông · Đùi trước",
-              "sets": 3,
-              "reps": "12 each",
-              "restSeconds": 90,
-              "videoUrl": "https://www.youtube.com/watch?v=L8fvypPrzzs"
-            },
-            {
-              "id": "ex_leg_curl",
-              "name": "Lying Leg Curl",
-              "muscleGroup": "Đùi sau",
+              "id": "ex_leg_extension",
+              "name": "Leg Extension",
+              "muscleGroup": "Đùi trước",
               "sets": 4,
-              "reps": "12",
-              "restSeconds": 60,
-              "isFail": true,
-              "videoUrl": "https://www.youtube.com/watch?v=1Tq3QMpbTIg"
+              "reps": "18",
+              "restSeconds": 75,
+              "isDropSet": true,
+              "notes": "Set 3 giữ trên 5s/rep. Set cuối drop set + lunges không tạ.",
+              "videoUrl": "https://www.youtube.com/watch?v=YyvSfVjQeL0"
             },
             {
-              "id": "ex_calf_raise",
+              "id": "ex_standing_calf_raise",
               "name": "Standing Calf Raise",
               "muscleGroup": "Bắp chân",
-              "sets": 5,
-              "reps": "12",
+              "sets": 4,
+              "reps": "20",
               "restSeconds": 45,
               "videoUrl": "https://www.youtube.com/watch?v=-M4-G8p8fmc"
             }
           ]
         },
         {
-          "id": "w3d4",
-          "dayNumber": 4,
-          "name": "Phần trên Phát triển",
-          "muscleGroup": "Ngực · Lưng · Cơ tay",
-          "estimatedMinutes": 55,
+          "id": "w3d3",
+          "dayNumber": 3,
+          "name": "Lưng",
+          "muscleGroup": "Lưng · Cơ lưng rộng",
+          "estimatedMinutes": 70,
           "exercises": [
             {
-              "id": "ex_db_press",
-              "name": "Flat Dumbbell Press",
-              "muscleGroup": "Ngực",
-              "sets": 4,
-              "reps": "10",
-              "restSeconds": 90,
-              "videoUrl": "https://www.youtube.com/watch?v=VmB1G1K7v94"
-            },
-            {
-              "id": "ex_lat_pulldown",
-              "name": "Lat Pulldown",
+              "id": "ex_close_grip_lat_pulldown",
+              "name": "Close Grip Lat Pulldown",
               "muscleGroup": "Cơ lưng rộng",
               "sets": 4,
-              "reps": "10",
-              "restSeconds": 90,
+              "reps": "10-12",
+              "restSeconds": 120,
+              "isDropSet": true,
+              "notes": "Set cuối 3 lần drop set.",
               "videoUrl": "https://www.youtube.com/watch?v=CAwf7n6Luuc"
             },
             {
-              "id": "ex_seated_row",
-              "name": "Seated Cable Row",
+              "id": "ex_underhand_cable_pulldown",
+              "name": "High Incline Cable Pulldown (Underhand Grip)",
+              "muscleGroup": "Cơ lưng rộng",
+              "sets": 4,
+              "reps": "10-12",
+              "restSeconds": 90,
+              "isDropSet": true,
+              "notes": "Set cuối 2 lần drop set."
+            },
+            {
+              "id": "ex_machine_row",
+              "name": "Machine Row",
               "muscleGroup": "Lưng",
               "sets": 4,
-              "reps": "10",
-              "restSeconds": 75,
-              "videoUrl": "https://www.youtube.com/watch?v=GZbfZ033f74"
-            },
-            {
-              "id": "ex_arnold_press",
-              "name": "Arnold Press",
-              "muscleGroup": "Vai",
-              "sets": 3,
               "reps": "10-12",
-              "restSeconds": 75,
-              "videoUrl": "https://www.youtube.com/watch?v=6Z15_WdXmVw"
+              "restSeconds": 90,
+              "isDropSet": true,
+              "notes": "Set cuối 3 lần drop set."
             },
             {
-              "id": "ex_tricep_pushdown",
-              "name": "Cable Triceps Pushdown",
-              "muscleGroup": "Cơ ba đầu",
-              "sets": 3,
+              "id": "ex_wide_lat_pulldown",
+              "name": "Wide Grip Lat Pulldown",
+              "muscleGroup": "Cơ lưng rộng",
+              "sets": 4,
+              "reps": "10-12",
+              "restSeconds": 90,
+              "isDropSet": true,
+              "notes": "Set cuối 3 lần drop set.",
+              "videoUrl": "https://www.youtube.com/watch?v=CAwf7n6Luuc"
+            },
+            {
+              "id": "ex_chest_supported_db_row",
+              "name": "Chest Supported Dumbbell Row",
+              "muscleGroup": "Lưng",
+              "sets": 4,
+              "reps": "10-12",
+              "restSeconds": 90,
+              "isDropSet": true,
+              "notes": "Set cuối 2 lần drop set."
+            },
+            {
+              "id": "ex_low_machine_row",
+              "name": "Low Machine Row (Straight Grip)",
+              "muscleGroup": "Lưng",
+              "sets": 4,
+              "reps": "10-12",
+              "restSeconds": 90,
+              "isDropSet": true,
+              "notes": "Set cuối 2 lần drop set."
+            }
+          ]
+        },
+        {
+          "id": "w3d4",
+          "dayNumber": 4,
+          "name": "Push",
+          "muscleGroup": "Ngực · Vai · Cơ ba đầu",
+          "estimatedMinutes": 75,
+          "exercises": [
+            {
+              "id": "ex_machine_fly",
+              "name": "Machine Fly",
+              "muscleGroup": "Ngực",
+              "sets": 4,
+              "reps": "12-15",
+              "restSeconds": 75,
+              "isDropSet": true,
+              "notes": "Set cuối 2 lần drop set."
+            },
+            {
+              "id": "ex_smith_incline_press",
+              "name": "Smith Machine Incline Press",
+              "muscleGroup": "Ngực trên",
+              "sets": 4,
+              "reps": "8/10",
+              "restSeconds": 120,
+              "isDropSet": true,
+              "notes": "2 hiệp đầu ghế 45°, 2 hiệp sau 30°. Set cuối 2 lần drop set."
+            },
+            {
+              "id": "ex_db_shoulder_press",
+              "name": "Dumbbell Shoulder Press",
+              "muscleGroup": "Vai",
+              "sets": 4,
+              "reps": "10-12",
+              "restSeconds": 90,
+              "isDropSet": true,
+              "notes": "Set cuối 1 lần drop set."
+            },
+            {
+              "id": "ex_lateral_raise",
+              "name": "Dumbbell Lateral Raise",
+              "muscleGroup": "Vai giữa",
+              "sets": 4,
               "reps": "12-15",
               "restSeconds": 60,
               "isDropSet": true,
+              "notes": "Set cuối 1 lần drop set.",
+              "videoUrl": "https://www.youtube.com/watch?v=3VcKaXpzqRo"
+            },
+            {
+              "id": "ex_flat_machine_press",
+              "name": "Flat Machine Press",
+              "muscleGroup": "Ngực",
+              "sets": 4,
+              "reps": "10-12",
+              "restSeconds": 90,
+              "isDropSet": true,
+              "notes": "Set cuối 1 lần drop set."
+            },
+            {
+              "id": "ex_one_arm_cable_lateral",
+              "name": "One Arm Cable Lateral Raise",
+              "muscleGroup": "Vai giữa",
+              "sets": 3,
+              "reps": "25",
+              "restSeconds": 45
+            },
+            {
+              "id": "ex_tricep_pushdown",
+              "name": "Cable Tricep Pushdown",
+              "muscleGroup": "Cơ ba đầu",
+              "sets": 4,
+              "reps": "12-15",
+              "restSeconds": 60,
               "videoUrl": "https://www.youtube.com/watch?v=2-LAMcpzODU"
             },
             {
-              "id": "ex_barbell_curl",
-              "name": "Barbell Curl",
-              "muscleGroup": "Cơ nhị đầu",
-              "sets": 3,
-              "reps": "10-12",
-              "restSeconds": 60,
+              "id": "ex_dips",
+              "name": "Dips",
+              "muscleGroup": "Cơ ba đầu",
+              "sets": 4,
+              "reps": "fail",
+              "restSeconds": 75,
               "isFail": true,
-              "videoUrl": "https://www.youtube.com/watch?v=kwG2ipFRgfo"
+              "notes": "Superset với Rope Overhead Extension.",
+              "videoUrl": "https://www.youtube.com/watch?v=2z8JmcrW-As"
+            },
+            {
+              "id": "ex_rope_oh_extension",
+              "name": "Rope Overhead Tricep Extension",
+              "muscleGroup": "Cơ ba đầu",
+              "sets": 4,
+              "reps": "12-15",
+              "restSeconds": 75,
+              "notes": "Superset với Dips."
             }
           ]
+        },
+        {
+          "id": "w3d5",
+          "dayNumber": 5,
+          "name": "Lower",
+          "muscleGroup": "Đùi sau · Mông · Bắp chân",
+          "estimatedMinutes": 65,
+          "exercises": [
+            {
+              "id": "ex_seated_leg_curl",
+              "name": "Seated Leg Curl",
+              "muscleGroup": "Đùi sau",
+              "sets": 6,
+              "reps": "12",
+              "restSeconds": 90,
+              "isDropSet": true,
+              "notes": "Set cuối 1 lần drop set.",
+              "videoUrl": "https://www.youtube.com/watch?v=1Tq3QMpbTIg"
+            },
+            {
+              "id": "ex_smith_lunge",
+              "name": "Smith Machine Lunge",
+              "muscleGroup": "Mông · Đùi trước",
+              "sets": 4,
+              "reps": "fail",
+              "restSeconds": 90,
+              "isFail": true
+            },
+            {
+              "id": "ex_deadlift",
+              "name": "Deadlift",
+              "muscleGroup": "Lưng · Đùi sau",
+              "sets": 6,
+              "reps": "12",
+              "restSeconds": 120,
+              "videoUrl": "https://www.youtube.com/watch?v=op9kVnSso6Q"
+            },
+            {
+              "id": "ex_one_leg_extension",
+              "name": "One Leg Extension",
+              "muscleGroup": "Đùi trước",
+              "sets": 4,
+              "reps": "15",
+              "restSeconds": 60,
+              "notes": "Gối hướng ra ngoài 45°, đá từng chân.",
+              "videoUrl": "https://www.youtube.com/watch?v=YyvSfVjQeL0"
+            },
+            {
+              "id": "ex_hip_abduction",
+              "name": "Hip Abduction",
+              "muscleGroup": "Mông",
+              "sets": 4,
+              "reps": "fail",
+              "restSeconds": 60,
+              "isFail": true
+            },
+            {
+              "id": "ex_standing_calf_raise",
+              "name": "Standing Calf Raise",
+              "muscleGroup": "Bắp chân",
+              "sets": 4,
+              "reps": "12-15",
+              "restSeconds": 45,
+              "videoUrl": "https://www.youtube.com/watch?v=-M4-G8p8fmc"
+            }
+          ],
+          "description": "Lower lần 3 — giữ nguyên cấu trúc."
         }
       ]
     }
